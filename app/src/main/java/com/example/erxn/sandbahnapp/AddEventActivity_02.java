@@ -15,7 +15,7 @@ import java.util.TimerTask;
 public class AddEventActivity_02 extends AppCompatActivity {
 
     TextView tvAnzahlDriver;
-    int driverCount = 0;
+    int driverCount = 1;
     String eventOrt;
     Button addButton;
     Button removeButton;
