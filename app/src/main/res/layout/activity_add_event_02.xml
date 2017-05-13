@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_add_event_02"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.example.erxn.sandbahnapp.AddEventActivity_02">
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="50dp"
+                android:layout_centerInParent="true">
+
+            <TextView
+                    android:id="@+id/TV_ANZAHL_DRIVER"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="0 Fahrer"
+                    android:textSize="30sp"
+                    android:textAlignment="center"/>
+
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp">
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:layout_centerInParent="true">
+
+                    <Button
+                            android:id="@+id/BUTTON_ADD_DRIVER"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/ic_add_circle_black_48dp"
+                            android:onClick="clicked"/>
+
+                    <Button
+                            android:id="@+id/BUTTON_REMOVE_DRIVER"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_marginLeft="15dp"
+                            android:background="@drawable/ic_remove_circle_black_48dp"
+                            android:onClick="clicked"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp">
+
+                <Button
+                        android:id="@+id/BUTTON_GO_ON"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/weiter_button"
+                        android:onClick="clicked"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

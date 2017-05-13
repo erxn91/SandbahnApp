@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/colorWhite">
+
+    <TextView
+            android:id="@+id/DATE_OF_EVENT"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="DATE"
+            android:textSize="30sp"
+            android:paddingTop="15dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="5dp"/>
+
+    <TextView
+            android:id="@+id/YEAR_OF_EVENT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="'17"
+            android:minHeight="65dp"/>
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="15dp"
+            android:layout_marginLeft="20dp">
+
+        <TextView
+                android:id="@+id/ORT_EVENT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ort des Events"/>
+
+        <TextView
+                android:id="@+id/ANZAHL_DRIVERS"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="50 Fahrer waren am Start"/>
+
+    </LinearLayout>
+
+</LinearLayout>
