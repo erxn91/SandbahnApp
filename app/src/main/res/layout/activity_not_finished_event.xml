@@ -8,6 +8,13 @@
         android:orientation="vertical"
         tools:context="com.example.erxn.sandbahnapp.NotFinishedEvent">
 
+    <Button
+            android:id="@+id/FINISHEVERYTHING"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="finish"
+            android:onClick="clicked"/>
+
     <ListView
             android:id="@+id/LIST_NOT_FINISHED_RACES"
             android:layout_width="match_parent"

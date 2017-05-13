@@ -31,18 +31,26 @@ public class MyDBManager extends SQLiteOpenHelper{
 
     // Daten des Events in die verschiedenen Spalten schreiben
     public boolean insertEvent(Event event) {
-            SQLiteDatabase db = this.getWritableDatabase();
-            ContentValues neueZeile = new ContentValues();
-            neueZeile.put(SPALTE_EVENT_DATUM, event.getFormatEventDate() + "." + event.getFormatEventYear());
-            neueZeile.put(SPALTE_EVENT_ORT, event.getEventOrt());
-            neueZeile.put(SPALTE_ANZAHL_DRIVERS, event.getAnzahlDrivers());
-            neueZeile.put(SPALTE_FINISHED, event.isFinished());
-            // db.insert liefert -1, wenn insert fehlgeschlagen
-            long result = db.insert(TABELLE_EVENT, null, neueZeile);
-            if(result == -1) {
-                return false;
-            }
-            else return true;
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues neueZeile = new ContentValues();
+        neueZeile.put(SPALTE_EVENT_DATUM, event.getFormatEventDate() + "." + event.getFormatEventYear());
+        neueZeile.put(SPALTE_EVENT_ORT, event.getEventOrt());
+        neueZeile.put(SPALTE_ANZAHL_DRIVERS, event.getAnzahlDrivers());
+        neueZeile.put(SPALTE_FINISHED, event.isFinished());
+        // db.insert liefert -1, wenn insert fehlgeschlagen
+        long result = db.insert(TABELLE_EVENT, null, neueZeile);
+        if(result == -1) {
+            return false;
+        }
+        else return true;
+    }
+
+    public void finishEvent() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(SPALTE_FINISHED, 1);
+        String where = SPALTE_FINISHED + "= 0";
+        db.update(TABELLE_EVENT, values, where, null);
     }
 
     // Cursor auf finished oder unfinished Events setzen
@@ -66,9 +74,13 @@ public class MyDBManager extends SQLiteOpenHelper{
         ArrayList<Event> events = new ArrayList<>();    // Liste der Events
         Cursor meinZeiger = selectEvents(finished);     // true gibt finished, false gibt unfinished Events zurück
 
+        // Cursor auf Position -1 setzen damit er im while-loop vorne beginnt
+        meinZeiger.moveToPosition(-1);
+
         try {
             while(meinZeiger.moveToNext()) {
                 Event e = new Event();
+                e.setEventID(meinZeiger.getInt(meinZeiger.getColumnIndex(SPALTE_EVENT_ID)));
                 e.setEventDateFromDB(meinZeiger.getString(meinZeiger.getColumnIndex(SPALTE_EVENT_DATUM)));
                 e.setEventOrt(meinZeiger.getString(meinZeiger.getColumnIndex(SPALTE_EVENT_ORT)));
                 e.setAnzahlDrivers(meinZeiger.getInt(meinZeiger.getColumnIndex(SPALTE_ANZAHL_DRIVERS)));

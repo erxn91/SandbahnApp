@@ -22,7 +22,7 @@ public class AdapterFinishedRace extends BaseAdapter {
     public AdapterFinishedRace(Activity someActivity, ArrayList<Event> eventsFinished) {
         // TODO Auto-generated constructor stub
         events = new Event[eventsFinished.size()];      // Array in Größe der ArrayList
-        events = eventsFinished.toArray(events);        // ArrayList in Array casten
+        eventsFinished.toArray(events);                 // ArrayList in Array casten
         context = someActivity;
         inflater = ( LayoutInflater )context.
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -55,7 +55,7 @@ public class AdapterFinishedRace extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         // TODO Auto-generated method stub
-        Holder holder=new Holder();
+        Holder holder = new Holder();
         View rowView;
         rowView = inflater.inflate(R.layout.list_item_finished_race, null);
         holder.tvDate=(TextView) rowView.findViewById(R.id.DATE_OF_EVENT);
@@ -70,7 +70,7 @@ public class AdapterFinishedRace extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                Toast.makeText(context, "You Clicked "+ events[position], Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "You Clicked "+ events[position].getEventID(), Toast.LENGTH_SHORT).show();
             }
         });
         return rowView;

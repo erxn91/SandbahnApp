@@ -6,6 +6,7 @@ import java.util.Calendar;
 
 public class Event {
 
+    private int eventID;
     private Calendar cal;
     private String eventDate;
     private String eventOrt;
@@ -20,6 +21,14 @@ public class Event {
 
         this.eventOrt = "Stuttgart";
         this.anzahlDrivers = 55;
+    }
+
+    public int getEventID() {
+        return this.eventID;
+    }
+
+    public void setEventID(int id) {
+        this.eventID = id;
     }
 
     private void setEventDate(Calendar calendar) {

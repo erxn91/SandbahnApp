@@ -22,12 +22,12 @@ public class FinishedEventActivity extends AppCompatActivity {
 
     private void iniControlls() {
         listFinishedEvents = (ListView)findViewById(R.id.LIST_FINISHED_RACES);
-        events = eventsFromDB();
+        events = getEventsFromDB();
         AdapterFinishedRace myAdapter = new AdapterFinishedRace(this, events);
         listFinishedEvents.setAdapter(myAdapter);
     }
 
-    private ArrayList<Event> eventsFromDB() {
+    private ArrayList<Event> getEventsFromDB() {
         MyDBManager db = new MyDBManager(this);
         return db.getEvents(true);
     }
