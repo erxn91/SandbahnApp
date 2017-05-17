@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void clicked(View v) {
         if(v.getId() == R.id.LAYOUT_ADD_EVENT || v.getId() == R.id.BUTTON_ADD_EVENT) {
-            Intent myIntent = new Intent(this, AddEventActivity.class);
+            Intent myIntent = new Intent(this, AddSomeEventOrt.class);
             startActivity(myIntent);
         }
         if(v.getId() == R.id.LAYOUT_EVENT_NOT_FINISHED || v.getId() == R.id.BUTTON_ACTIVE_RACE) {

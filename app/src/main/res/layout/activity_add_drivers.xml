@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_add_drivers"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.example.erxn.sandbahnapp.AddDriversActivity">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+        <EditText
+                android:id="@+id/ET_DRIVER_NAME"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapSentences"
+                android:hint="Name des Fahrers"/>
+
+        <EditText
+                android:id="@+id/ET_DRIVER_MACHINE"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapSentences"
+                android:hint="Name der Maschine"/>
+
+        <Button
+                android:id="@+id/BUTTON_ADD_DRIVER_TO_LIST"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Hinzufügen"
+                android:onClick="clicked"/>
+
+        <Button
+                android:id="@+id/BUTTON_EVENT_ERSTELLEN"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Event erstellen"
+                android:onClick="clicked"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="20dp">
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorAccent"
+                android:text="bereits angemeldet..."
+                android:padding="10dp"
+                android:textSize="16sp"/>
+
+        <ListView
+                android:id="@+id/LIST_ADD_DRIVERS"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+        </ListView>
+
+    </LinearLayout>
+
+</LinearLayout>

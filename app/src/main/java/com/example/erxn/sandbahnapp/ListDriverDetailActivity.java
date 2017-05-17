@@ -2,22 +2,22 @@ package com.example.erxn.sandbahnapp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ListView;
 
-public class AddEventActivity_03 extends AppCompatActivity {
+public class ListDriverDetailActivity extends AppCompatActivity {
 
-    String eventOrt;
-    int anzahlFahrer;
+    ListView listDriverDetail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_event_03);
+        setContentView(R.layout.activity_list_driver_detail);
 
         initControlls();
     }
 
     private void initControlls() {
-        eventOrt = getIntent().getStringExtra("EVENTORT");
-        anzahlFahrer = getIntent().getIntExtra("ANZAHL_FAHRER", 0);
+        listDriverDetail = (ListView)findViewById(R.id.LIST_DRIVER_DETAIL);
+
     }
 }

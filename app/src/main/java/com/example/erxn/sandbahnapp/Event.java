@@ -2,6 +2,7 @@
 
 package com.example.erxn.sandbahnapp;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Event {
@@ -10,17 +11,36 @@ public class Event {
     private Calendar cal;
     private String eventDate;
     private String eventOrt;
-    // private ArrayList<Driver> listDriver;
+    private ArrayList<Driver> listDriver;
     private int anzahlDrivers;
-    private int finished = 0;
+    private int finished = 0;       // DB kennt kein boolean... deshalb int!
 
 
     public Event() {
+        listDriver = new ArrayList<Driver>();
         cal = Calendar.getInstance ();
         setEventDate(cal);
 
         this.eventOrt = "Stuttgart";
         this.anzahlDrivers = 55;
+    }
+
+    private void setEventDate(Calendar calendar) {
+        eventDate = cal.get(Calendar.DAY_OF_MONTH) + "." +
+                (cal.get(Calendar.MONTH) + 1) + "." +
+                cal.get(Calendar.YEAR);
+    }
+
+    public void addDriver(Driver driver) {
+        listDriver.add(driver);
+    }
+
+    public void removeDriver(int index) {
+        listDriver.remove(index);
+    }
+
+    public ArrayList<Driver> getDrivers() {
+        return this.listDriver;
     }
 
     public int getEventID() {
@@ -29,12 +49,6 @@ public class Event {
 
     public void setEventID(int id) {
         this.eventID = id;
-    }
-
-    private void setEventDate(Calendar calendar) {
-        eventDate = cal.get(Calendar.DAY_OF_MONTH) + "." +
-                (cal.get(Calendar.MONTH) + 1) + "." +
-                cal.get(Calendar.YEAR);
     }
 
     public String getEventDate() {

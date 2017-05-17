@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+        <TextView
+                android:id="@+id/TV_NAME"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Name des Fahrers"
+                android:textSize="16sp"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"/>
+
+        <TextView
+                android:id="@+id/TV_MACHINE"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Maschine des Fahrers"
+                android:textSize="16sp"
+                android:paddingLeft="15dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="10dp"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:layout_marginTop="5dp">
+
+        <Button
+                android:id="@+id/BUTTON_DELETE_DRIVER"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Löschen"
+                android:onClick="clicked"/>
+
+    </RelativeLayout>
+</LinearLayout>

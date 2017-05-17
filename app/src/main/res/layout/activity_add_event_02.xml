@@ -5,7 +5,7 @@
         android:id="@+id/activity_add_event_02"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.example.erxn.sandbahnapp.AddEventActivity_02">
+        tools:context="com.example.erxn.sandbahnapp.AddSomeDrivers">
 
     <RelativeLayout
             android:layout_width="match_parent"

@@ -53,6 +53,29 @@ public class MyDBManager extends SQLiteOpenHelper{
         db.update(TABELLE_EVENT, values, where, null);
     }
 
+    // einzelnes Event über EventID selektieren
+    public Cursor selectOneEvent(int eventID) {
+        String ID = Integer.toString(eventID);
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor meinZeiger;
+        meinZeiger = db.rawQuery("SELECT * FROM " + TABELLE_EVENT +
+                " WHERE " + SPALTE_EVENT_ID + "= " + ID, null);
+
+        meinZeiger.moveToFirst();
+        return meinZeiger;
+    }
+
+    public Event getOneEvent(int eventID) {
+        Cursor meinZeiger = selectOneEvent(eventID);
+        Event e = new Event();
+        e.setEventID(meinZeiger.getInt(meinZeiger.getColumnIndex(SPALTE_EVENT_ID)));
+        e.setEventDateFromDB(meinZeiger.getString(meinZeiger.getColumnIndex(SPALTE_EVENT_DATUM)));
+        e.setEventOrt(meinZeiger.getString(meinZeiger.getColumnIndex(SPALTE_EVENT_ORT)));
+        e.setAnzahlDrivers(meinZeiger.getInt(meinZeiger.getColumnIndex(SPALTE_ANZAHL_DRIVERS)));
+        meinZeiger.close();
+        return e;
+    }
+
     // Cursor auf finished oder unfinished Events setzen
     private Cursor selectEvents(boolean finished) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -74,7 +97,7 @@ public class MyDBManager extends SQLiteOpenHelper{
         ArrayList<Event> events = new ArrayList<>();    // Liste der Events
         Cursor meinZeiger = selectEvents(finished);     // true gibt finished, false gibt unfinished Events zurück
 
-        // Cursor auf Position -1 setzen damit er im while-loop vorne beginnt
+        // Cursor auf Position -1 setzen, sodass er im while-loop vorne beginnt
         meinZeiger.moveToPosition(-1);
 
         try {

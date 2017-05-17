@@ -12,7 +12,7 @@
             android:id="@+id/FINISHEVERYTHING"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="finish"
+            android:text="Alle Events abschließen"
             android:onClick="clicked"/>
 
     <ListView

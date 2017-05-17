@@ -5,9 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
-public class AddEventActivity extends AppCompatActivity {
+public class AddSomeEventOrt extends AppCompatActivity {
 
     EditText etEventOrt;
 
@@ -25,7 +24,7 @@ public class AddEventActivity extends AppCompatActivity {
 
     public void clicked(View v) {
         if(v.getId() == R.id.BUTTON_NEXT_TO_ADD_DRIVERS) {
-            Intent myIntent =  new Intent(this, AddEventActivity_02.class);
+            Intent myIntent =  new Intent(this, AddDriversActivity.class);
             myIntent.putExtra("EVENTORT", etEventOrt.getText().toString());
             startActivity(myIntent);
         }

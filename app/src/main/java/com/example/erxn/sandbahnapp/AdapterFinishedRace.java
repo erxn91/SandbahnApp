@@ -4,6 +4,7 @@ package com.example.erxn.sandbahnapp;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.provider.CalendarContract;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,12 @@ import java.util.ArrayList;
 public class AdapterFinishedRace extends BaseAdapter {
     Event[] events;
     Context context;
+
+    TextView tvDate;
+    TextView tvYearOfEvent;
+    TextView tvOrt;
+    TextView tvAnzahlDrivers;
+
     private static LayoutInflater inflater = null;
     public AdapterFinishedRace(Activity someActivity, ArrayList<Event> eventsFinished) {
         // TODO Auto-generated constructor stub
@@ -45,32 +52,26 @@ public class AdapterFinishedRace extends BaseAdapter {
         return position;
     }
 
-    public class Holder
-    {
-        TextView tvDate;
-        TextView tvYearOfEvent;
-        TextView tvOrt;
-        TextView tvAnzahlDrivers;
-    }
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         // TODO Auto-generated method stub
-        Holder holder = new Holder();
         View rowView;
         rowView = inflater.inflate(R.layout.list_item_finished_race, null);
-        holder.tvDate=(TextView) rowView.findViewById(R.id.DATE_OF_EVENT);
-        holder.tvOrt=(TextView) rowView.findViewById(R.id.ORT_EVENT);
-        holder.tvYearOfEvent=(TextView) rowView.findViewById(R.id.YEAR_OF_EVENT);
-        holder.tvAnzahlDrivers=(TextView) rowView.findViewById(R.id.ANZAHL_DRIVERS);
-        holder.tvDate.setText(events[position].getFormatEventDate());
-        holder.tvYearOfEvent.setText(events[position].getFormatEventYear());
-        holder.tvOrt.setText(events[position].getEventOrt());
-        holder.tvAnzahlDrivers.setText(Integer.toString(events[position].getAnzahlDrivers()) + " Teilnehmer");
+        tvDate=(TextView) rowView.findViewById(R.id.DATE_OF_EVENT);
+        tvOrt=(TextView) rowView.findViewById(R.id.ORT_EVENT);
+        tvYearOfEvent=(TextView) rowView.findViewById(R.id.YEAR_OF_EVENT);
+        tvAnzahlDrivers=(TextView) rowView.findViewById(R.id.ANZAHL_DRIVERS);
+        tvDate.setText(events[position].getFormatEventDate());
+        tvYearOfEvent.setText(events[position].getFormatEventYear());
+        tvOrt.setText(events[position].getEventOrt());
+        tvAnzahlDrivers.setText(Integer.toString(events[position].getAnzahlDrivers()) + " Teilnehmer");
         rowView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                Toast.makeText(context, "You Clicked "+ events[position].getEventID(), Toast.LENGTH_SHORT).show();
+                Intent myIntent = new Intent(context, NotFinishedEventDetail.class);
+                myIntent.putExtra("EVENT_ID", events[position].getEventID());
+                context.startActivity(myIntent);
             }
         });
         return rowView;

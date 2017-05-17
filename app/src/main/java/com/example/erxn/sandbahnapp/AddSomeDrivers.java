@@ -12,7 +12,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class AddEventActivity_02 extends AppCompatActivity {
+public class AddSomeDrivers extends AppCompatActivity {
 
     TextView tvAnzahlDriver;
     int driverCount = 0;
@@ -82,8 +82,7 @@ public class AddEventActivity_02 extends AppCompatActivity {
             else tvAnzahlDriver.setText(--driverCount + " Fahrer");
         }
         if(v.getId() == R.id.BUTTON_GO_ON) {
-            Event e = initEvent();
-            saveInDB(e);
+            saveInDB(initEvent());
 
             Intent myIntent = new Intent(this, MainActivity.class);
             startActivity(myIntent);
