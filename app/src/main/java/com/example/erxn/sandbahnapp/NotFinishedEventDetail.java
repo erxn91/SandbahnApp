@@ -5,9 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class NotFinishedEventDetail extends AppCompatActivity {
 
+    int eventID;
     TextView tvEventOrt;
     TextView tvAnzahlFahrer;
     Event event;
@@ -30,7 +32,6 @@ public class NotFinishedEventDetail extends AppCompatActivity {
     }
 
     private void getEventFromDB() {
-        int eventID;
         MyDBManager db = new MyDBManager(this);
         Intent myIntent = getIntent();
         eventID = myIntent.getIntExtra("EVENT_ID", 0);
@@ -39,7 +40,9 @@ public class NotFinishedEventDetail extends AppCompatActivity {
 
     public void clicked(View v) {
         if(v.getId() == R.id.BUTTON_LIST_DRIVERS_DETAIL) {
-
+            Intent myIntent = new Intent(this, ListDriverDetailActivity.class);
+            myIntent.putExtra("EVENT_ID_DETAIL", eventID);
+            startActivity(myIntent);
         }
     }
 }

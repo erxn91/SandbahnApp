@@ -24,7 +24,7 @@ public class NotFinishedEvent extends AppCompatActivity {
     private void initControlls() {
         listNotFinishedEvents = (ListView)findViewById(R.id.LIST_NOT_FINISHED_RACES);
         events = getEventsFromDB();
-        AdapterFinishedRace myAdapter = new AdapterFinishedRace(this, events);
+        AdapterRace myAdapter = new AdapterRace(this, events);
         listNotFinishedEvents.setAdapter(myAdapter);
     }
 

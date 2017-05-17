@@ -19,20 +19,18 @@ public class Event {
     public Event() {
         listDriver = new ArrayList<Driver>();
         cal = Calendar.getInstance ();
-        setEventDate(cal);
-
-        this.eventOrt = "Stuttgart";
-        this.anzahlDrivers = 55;
+        this.eventOrt = "kein Ort hinzugefügt";
+        this.anzahlDrivers = 0;
     }
 
-    private void setEventDate(Calendar calendar) {
+    public void setEventDate() {
         eventDate = cal.get(Calendar.DAY_OF_MONTH) + "." +
                 (cal.get(Calendar.MONTH) + 1) + "." +
                 cal.get(Calendar.YEAR);
     }
 
-    public void addDriver(Driver driver) {
-        listDriver.add(driver);
+    public void setDrivers(ArrayList<Driver> drivers) {
+        this.listDriver = drivers;
     }
 
     public void removeDriver(int index) {
@@ -60,7 +58,7 @@ public class Event {
         String eventFormat = "";
         String[] months = {"JAN", "FEB", "MÄR", "APR", "MAI", "JUN", "JUL", "AUG", "SEP", "OKT", "NOV", "DEZ"};
 
-        eventFormat = cal.get(Calendar.DAY_OF_MONTH) + "." + months[cal.get(Calendar.MONTH)];
+        eventFormat = cal.get(Calendar.DAY_OF_MONTH) + "." + months[cal.get(Calendar.MONTH)] + getFormatEventYear();
         return eventFormat;
     }
 

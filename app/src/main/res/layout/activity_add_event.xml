@@ -25,9 +25,8 @@
                     android:layout_height="wrap_content"
                     android:hint="Ort des Events eingeben"
                     android:imeOptions="actionNext"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:textAlignment="center"/>
+                    android:inputType="textCapSentences"
+                    android:maxLines="1"/>
 
             <RelativeLayout
                     android:layout_width="match_parent"

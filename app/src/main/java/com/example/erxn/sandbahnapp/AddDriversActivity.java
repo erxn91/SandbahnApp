@@ -28,8 +28,7 @@ public class AddDriversActivity extends AppCompatActivity {
 
     private void initControlls() {
         listOfDrivers = (ListView)findViewById(R.id.LIST_ADD_DRIVERS);
-        event = new Event();
-        drivers = event.getDrivers();
+        drivers = new ArrayList<Driver>();
 
         Intent myIntent = getIntent();
         eventOrt = myIntent.getStringExtra("EVENTORT");
@@ -39,10 +38,12 @@ public class AddDriversActivity extends AppCompatActivity {
     }
 
     private Event initEvent() {
-            Event e = event;
-            e.setEventOrt(eventOrt);
-            e.setAnzahlDrivers(listOfDrivers.getCount());
-            return e;
+            event = new Event();
+            event.setEventDate();
+            event.setEventOrt(eventOrt);
+            event.setAnzahlDrivers(listOfDrivers.getCount());
+            event.setDrivers(drivers);
+            return event;
     }
 
     private void saveInDB(Event e) {
@@ -58,7 +59,7 @@ public class AddDriversActivity extends AppCompatActivity {
             if(driverName.getText().toString().length() == 0) driverName.setError("Bitte Namen des Fahrers eingeben");
             else {
                 Driver driver = new Driver(driverName.getText().toString(), driverMachine.getText().toString());
-                event.addDriver(driver);
+                drivers.add(driver);
 
                 driverName.setText("");
                 driverMachine.setText("");

@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class AdapterFinishedRace extends BaseAdapter {
+public class AdapterRace extends BaseAdapter {
     Event[] events;
     Context context;
 
@@ -26,7 +26,7 @@ public class AdapterFinishedRace extends BaseAdapter {
     TextView tvAnzahlDrivers;
 
     private static LayoutInflater inflater = null;
-    public AdapterFinishedRace(Activity someActivity, ArrayList<Event> eventsFinished) {
+    public AdapterRace(Activity someActivity, ArrayList<Event> eventsFinished) {
         // TODO Auto-generated constructor stub
         events = new Event[eventsFinished.size()];      // Array in Größe der ArrayList
         eventsFinished.toArray(events);                 // ArrayList in Array casten

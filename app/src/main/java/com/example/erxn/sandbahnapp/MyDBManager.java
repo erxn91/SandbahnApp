@@ -11,29 +11,40 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 
 
-public class MyDBManager extends SQLiteOpenHelper{
+public class MyDBManager extends SQLiteOpenHelper {
 
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "Finished_Events.db";
 
-    // Aufbau der Tabelle
-    public static final String TABELLE_EVENT = "Event";
-    public static final String SPALTE_EVENT_ID = "ID";
-    public static final String SPALTE_EVENT_DATUM = "EventDatum";
-    public static final String SPALTE_EVENT_ORT = "EventOrt";
-    public static final String SPALTE_ANZAHL_DRIVERS = "AnzahlFahrer";
-    public static final String SPALTE_FINISHED = "isFinished";
+    // Aufbau der Tabelle Event
+    private static final String TABELLE_EVENT = "Event";
+    private static final String SPALTE_EVENT_ID = "ID";
+    private static final String SPALTE_EVENT_DATUM = "EventDatum";
+    private static final String SPALTE_EVENT_ORT = "EventOrt";
+    private static final String SPALTE_ANZAHL_DRIVERS = "AnzahlFahrer";
+    private static final String SPALTE_FINISHED = "isFinished";
+
+    private static final String TABELLE_DRIVERS = "Fahrer";
+    private static final String SPALTE_DRIVER_ID = "ID";
+    private static final String SPALTE_DRIVER_NAME = "Name";
+    private static final String SPALTE_DRIVER_MACHINE = "Maschine";
+    private static final String SPALTE_EVENT_ID_FK = "Event_ID";
 
     public MyDBManager(Context cxt) {
         super(cxt, DATABASE_NAME, null, DATABASE_VERSION);
         SQLiteDatabase db = this.getWritableDatabase();
     }
 
+
+    /* Methoden für die Event Tabelle -------------------------------
+    -----------------------------------------------------------------
+     */
+
     // Daten des Events in die verschiedenen Spalten schreiben
     public boolean insertEvent(Event event) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues neueZeile = new ContentValues();
-        neueZeile.put(SPALTE_EVENT_DATUM, event.getFormatEventDate() + "." + event.getFormatEventYear());
+        neueZeile.put(SPALTE_EVENT_DATUM, event.getFormatEventDate());
         neueZeile.put(SPALTE_EVENT_ORT, event.getEventOrt());
         neueZeile.put(SPALTE_ANZAHL_DRIVERS, event.getAnzahlDrivers());
         neueZeile.put(SPALTE_FINISHED, event.isFinished());
@@ -42,7 +53,13 @@ public class MyDBManager extends SQLiteOpenHelper{
         if(result == -1) {
             return false;
         }
-        else return true;
+        else {
+            Cursor meinZeiger;
+            meinZeiger = db.rawQuery("SELECT * FROM " + TABELLE_EVENT, null);
+            int idCounter = meinZeiger.getCount();
+            insertDrivers(event, idCounter);
+            return true;
+        }
     }
 
     public void finishEvent() {
@@ -54,7 +71,7 @@ public class MyDBManager extends SQLiteOpenHelper{
     }
 
     // einzelnes Event über EventID selektieren
-    public Cursor selectOneEvent(int eventID) {
+    private Cursor selectOneEvent(int eventID) {
         String ID = Integer.toString(eventID);
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor meinZeiger;
@@ -115,6 +132,58 @@ public class MyDBManager extends SQLiteOpenHelper{
         return events;
     }
 
+
+
+    /* Methoden für die Drivers Tabelle ----------------------------
+    ----------------------------------------------------------------
+     */
+
+    private boolean insertDrivers(Event event, int eventID) {
+        ArrayList<Driver> drivers = event.getDrivers();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        for(Driver driver : drivers) {
+            ContentValues neueZeile = new ContentValues();
+            neueZeile.put(SPALTE_DRIVER_NAME, driver.getName());
+            neueZeile.put(SPALTE_DRIVER_MACHINE, driver.getMachine());
+            neueZeile.put(SPALTE_EVENT_ID_FK, eventID);
+            long result = db.insert(TABELLE_DRIVERS, null, neueZeile);
+            if(result == -1) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private Cursor selectDriversOfEvent(int eventID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String id = Integer.toString(eventID);
+        Cursor meinZeiger;
+        meinZeiger = db.rawQuery("SELECT * FROM " + TABELLE_DRIVERS +
+                " WHERE " + SPALTE_EVENT_ID_FK + "= " + id, null);
+        return meinZeiger;
+    }
+
+    public ArrayList<Driver> getDriversOfEvent(int eventID) {
+        ArrayList<Driver> drivers = new ArrayList<Driver>();
+        Cursor meinZeiger = selectDriversOfEvent(eventID);
+
+        // Cursor auf Position -1 setzen, sodass er im while-loop vorne beginnt
+        meinZeiger.moveToPosition(-1);
+
+        try {
+            while(meinZeiger.moveToNext()) {
+                String driverName = meinZeiger.getString(meinZeiger.getColumnIndex(SPALTE_DRIVER_NAME));
+                String driverMachine = meinZeiger.getString(meinZeiger.getColumnIndex(SPALTE_DRIVER_MACHINE));
+                Driver driver = new Driver(driverName, driverMachine);
+                drivers.add(driver);
+            }
+        } finally {
+            meinZeiger.close();
+        }
+        return drivers;
+    }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(
@@ -124,6 +193,15 @@ public class MyDBManager extends SQLiteOpenHelper{
                         SPALTE_EVENT_ORT+ " TEXT," +
                         SPALTE_ANZAHL_DRIVERS + " INTEGER," +
                         SPALTE_FINISHED + " INTEGER" +
+                        ")"
+        );
+
+        db.execSQL(
+                "CREATE TABLE " + TABELLE_DRIVERS + " (" +
+                        SPALTE_DRIVER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        SPALTE_DRIVER_NAME + " TEXT," +
+                        SPALTE_DRIVER_MACHINE + " TEXT," +
+                        SPALTE_EVENT_ID_FK + " INTEGER" +
                         ")"
         );
     }
