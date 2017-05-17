@@ -54,6 +54,7 @@ public class MyDBManager extends SQLiteOpenHelper {
             return false;
         }
         else {
+            // letzte id der Event Tabelle auslesen um diese als FK für die Driver Tabelle zu nutzen!
             Cursor meinZeiger;
             meinZeiger = db.rawQuery("SELECT * FROM " + TABELLE_EVENT, null);
             int idCounter = meinZeiger.getCount();

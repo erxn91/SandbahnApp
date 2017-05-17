@@ -17,17 +17,19 @@
         </activity>
         <activity android:name=".FinishedEventActivity">
         </activity>
-        <activity android:name=".AddSomeEventOrt">
+        <activity android:name=".AddEventOrtActivity">
         </activity>
-        <activity android:name=".AddSomeDrivers">
+        <activity android:name=".AddSomeDriversActivity">
         </activity>
-        <activity android:name=".NotFinishedEvent">
+        <activity android:name=".NotFinishedEventActivity">
         </activity>
         <activity android:name=".AddDriversActivity">
         </activity>
         <activity android:name=".NotFinishedEventDetail">
         </activity>
         <activity android:name=".ListDriverDetailActivity">
+        </activity>
+        <activity android:name=".ChooseEventTypeActivity">
         </activity>
     </application>
 

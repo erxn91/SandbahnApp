@@ -8,7 +8,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class NotFinishedEvent extends AppCompatActivity {
+public class NotFinishedEventActivity extends AppCompatActivity {
 
     ListView listNotFinishedEvents;
     ArrayList<Event> events;

@@ -12,7 +12,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class AddSomeDrivers extends AppCompatActivity {
+public class AddSomeDriversActivity extends AppCompatActivity {
 
     TextView tvAnzahlDriver;
     int driverCount = 0;
