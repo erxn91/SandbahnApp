@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/colorCreme"
+        android:background="@drawable/app_bg"
         tools:context="com.example.erxn.sandbahnapp.MainActivity">
 
             <RelativeLayout
@@ -17,17 +17,17 @@
                     android:layout_height="match_parent">
 
                 <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:id="@+id/LINEAR_LAYOUT_MAIN"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="40dp"
                         android:layout_centerInParent="true">
 
                     <LinearLayout
                             android:id="@+id/LAYOUT_ADD_EVENT"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@color/colorDark"
+                            android:background="#dd21272b"
                             android:padding="10dp"
                             android:onClick="clicked">
 
@@ -54,8 +54,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="10dp"
-                            android:layout_marginTop="10dp"
-                            android:background="@color/colorDark"
+                            android:layout_marginTop="5dp"
+                            android:background="#dd21272b"
                             android:onClick="clicked">
 
 
@@ -78,11 +78,11 @@
 
                     <LinearLayout
                             android:id="@+id/LAYOUT_EVENT_FINISHED"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="10dp"
-                            android:layout_marginTop="10dp"
-                            android:background="@color/colorDark"
+                            android:layout_marginTop="5dp"
+                            android:background="#dd21272b"
                             android:onClick="clicked">
 
 
@@ -105,61 +105,34 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                        android:id="@+id/LAYOUT_CREDITS"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:layout_below="@id/LINEAR_LAYOUT_MAIN"
+                        android:layout_marginTop="5dp"
+                        android:background="#dd21272b"
+                        android:onClick="clicked">
+
+
+                    <Button
+                            android:id="@+id/BUTTON_CREDITS"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/ic_settings_ethernet_white_48dp"
+                            android:onClick="clicked"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="16sp"
+                            android:text="Credits"/>
+
+                </LinearLayout>
+
             </RelativeLayout>
-
-            <!--
-            <LinearLayout
-                    android:id="@+id/LAYOUT_NOT_FINISHED_RACES"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="visible"
-                    android:layout_below="@id/RELATIVE_LAYOUT_1">
-
-                <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp"
-                        android:textSize="14sp"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:background="@color/colorAccent"
-                        android:text="läuft noch..."/>
-
-                <ListView
-                        android:id="@+id/LIST_NOT_FINISHED_RACES"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                </ListView>
-
-            </LinearLayout>
-            -->
-
-            <!--
-            <LinearLayout
-                    android:id="@+id/LAYOUT_FINISHED_RACES"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_below="@id/LAYOUT_NOT_FINISHED_RACES">
-
-
-                <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp"
-                        android:textSize="14sp"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:background="@color/colorAccent"
-                        android:layout_marginTop="20dp"
-                        android:text="Diese Events wurden bereits beendet!"/>
-
-                <ListView
-                        android:id="@+id/LIST_FINISHED_RACES"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                </ListView>
-
-            </LinearLayout>
-            -->
 
 </LinearLayout>

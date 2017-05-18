@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/colorCreme"
+        android:background="@drawable/app_bg_blank"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         tools:context="com.example.erxn.sandbahnapp.ChooseEventTypeActivity">
@@ -18,7 +18,8 @@
             android:text="schnelles Event"
             android:layout_marginBottom="5dp"
             android:textColor="@color/colorWhite"
-            android:background="@color/colorGrey"
+            android:textSize="18sp"
+            android:background="#778F9E8B"
             android:layout_weight="1"
             android:onClick="clicked"/>
 
@@ -28,8 +29,9 @@
             android:layout_height="match_parent"
             android:text="benutzerdefiniertes Event"
             android:layout_marginTop="5dp"
-            android:background="@color/colorAccent"
+            android:background="#bb5B7876"
             android:textColor="@color/colorWhite"
+            android:textSize="18sp"
             android:layout_weight="1"
             android:onClick="clicked"/>
 
