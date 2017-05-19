@@ -47,9 +47,11 @@ public class FinishedEventDetailActivity extends AppCompatActivity {
         tvAnzahlFahrer.setText(Integer.toString(event.getAnzahlDrivers()) + " Fahrer");
         tvEventDate.setText(event.getEventDate());
 
-        tvFirstPlace.setText("1. Platz: " + winners[0].getName());
-        tvSecondPlace.setText("2. Platz: " + winners[1].getName());
-        tvThirdPlace.setText("3. Platz: " + winners[2].getName());
+        if(event.getAnzahlDrivers() >= 3) {
+            tvFirstPlace.setText("1. Platz: " + winners[0].getName());
+            tvSecondPlace.setText("2. Platz: " + winners[1].getName());
+            tvThirdPlace.setText("3. Platz: " + winners[2].getName());
+        }
     }
 
     private void getEventFromDB() {
