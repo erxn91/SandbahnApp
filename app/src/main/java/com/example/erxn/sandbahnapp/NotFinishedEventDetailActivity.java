@@ -9,9 +9,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 
-public class EventDetailActivity extends AppCompatActivity {
+public class NotFinishedEventDetailActivity extends AppCompatActivity {
 
     int eventID;
     TextView tvEventOrt;
@@ -51,9 +53,19 @@ public class EventDetailActivity extends AppCompatActivity {
         // Drivers of Event
         drivers = new ArrayList<>();
         drivers = db.getDriversOfEvent(eventID);
+        if(drivers.isEmpty()) drivers = giveMeDriverList();
     }
 
-    private AlertDialog.Builder giveMeDialogBuilder(ListView myList) {
+    private ArrayList<Driver> giveMeDriverList() {
+        ArrayList<Driver> drivers = new ArrayList<>();
+        for(int i = 1; i <= event.getAnzahlDrivers(); i++) {
+            Driver driver = new Driver("Fahrer " + i, "keine Maschine");
+            drivers.add(driver);
+        }
+        return drivers;
+    }
+
+    private AlertDialog.Builder giveMeListDialogBuilder(ListView myList) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
@@ -65,13 +77,49 @@ public class EventDetailActivity extends AppCompatActivity {
         return builder;
     }
 
+    private AlertDialog.Builder giveMeAcceptionDialogBuilder() {
+        final Intent myIntent = new Intent(this, MainActivity.class);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Event abschließen")
+                .setMessage("Möchtest du dieses Event wirklich abschließen?")
+                .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finishThisEvent(eventID);
+                        startActivity(myIntent);
+                        Toast.makeText(
+                                getApplicationContext(),
+                                "Event erfolgreich abgeschlossen",
+                                Toast.LENGTH_SHORT
+                        ).show();
+                    }
+                })
+                .setNegativeButton("Nein", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Nichts unternehmen
+                    }
+                });
+        return builder;
+    }
+
+    private void finishThisEvent(int eventID) {
+        MyDBManager db = new MyDBManager(this);
+        db.finishEvents(eventID);
+    }
+
     public void clicked(View v) {
         if(v.getId() == R.id.BUTTON_LIST_DRIVERS_DETAIL) {
             AdapterDriverList adapter = new AdapterDriverList(this, drivers, false);
             ListView listOFDrivers = new ListView(this);
             listOFDrivers.setAdapter(adapter);
 
-            final Dialog dialog = giveMeDialogBuilder(listOFDrivers).create();
+            final Dialog dialog = giveMeListDialogBuilder(listOFDrivers).create();
+            dialog.setCanceledOnTouchOutside(true);
+            dialog.show();
+        }
+        if(v.getId() == R.id.BUTTON_FINISH_THIS_EVENT) {
+            final Dialog dialog = giveMeAcceptionDialogBuilder().create();
             dialog.setCanceledOnTouchOutside(true);
             dialog.show();
         }

@@ -26,13 +26,13 @@ public class NotFinishedEventActivity extends AppCompatActivity {
     private void initControlls() {
         listNotFinishedEvents = (ListView)findViewById(R.id.LIST_NOT_FINISHED_RACES);
         events = getEventsFromDB();
-        AdapterRace myAdapter = new AdapterRace(this, events);
+        AdapterRace myAdapter = new AdapterRace(this, events, false);
         listNotFinishedEvents.setAdapter(myAdapter);
     }
 
     private void finishEvent() {
         MyDBManager db = new MyDBManager(this);
-        db.finishEvent();
+        db.finishEvents();
     }
 
     private ArrayList<Event> getEventsFromDB() {

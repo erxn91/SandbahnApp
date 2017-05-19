@@ -2,10 +2,10 @@
 <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/activity_not_finished_event_detail"
+        android:id="@+id/activity_finished_event_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.example.erxn.sandbahnapp.NotFinishedEventDetailActivity">
+        tools:context="com.example.erxn.sandbahnapp.FinishedEventDetailActivity">
 
     <LinearLayout
             android:layout_width="wrap_content"
@@ -15,7 +15,7 @@
             android:layout_centerInParent="true">
 
         <TextView
-                android:id="@+id/TV_EVENT_DATE"
+                android:id="@+id/TV_EVENT_DATE_FINISHED"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="30sp"
@@ -23,7 +23,7 @@
                 android:text="01.JAN'17"/>
 
         <TextView
-                android:id="@+id/TV_DETAIL_ORT"
+                android:id="@+id/TV_DETAIL_ORT_FINISHED"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -37,7 +37,7 @@
                 android:orientation="horizontal">
 
             <TextView
-                    android:id="@+id/TV_DETAIL_ANZAHL_FAHRER"
+                    android:id="@+id/TV_DETAIL_ANZAHL_FAHRER_FINISHED"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
@@ -53,35 +53,35 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <TextView
+                android:id="@+id/TV_FIRST_PLACE"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-            <Button
-                    android:id="@+id/BUTTON_ZUM_RENNEN"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:padding="30dp"
-                    android:text="zum Rennen"
-                    android:onClick="clicked"/>
+                android:textSize="20sp"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/colorFirstPlace"
+                android:textStyle="bold"
+                android:text="1. Platz - FahrerXY"/>
 
-            <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="20dp">
+        <TextView
+                android:id="@+id/TV_SECOND_PLACE"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/colorSecondPlace"
+                android:textStyle="bold"
+                android:text="2. Platz - FahrerXY"/>
 
-                <Button
-                        android:id="@+id/BUTTON_FINISH_THIS_EVENT"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_centerInParent="true"
-                        android:background="@drawable/ic_check_circle_black_48dp"
-                        android:onClick="clicked"/>
-
-            </RelativeLayout>
-
-        </LinearLayout>
+        <TextView
+                android:id="@+id/TV_THIRD_PLACE"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/colorThirdPlace"
+                android:textStyle="bold"
+                android:text="3. Platz - FahrerXY"/>
 
     </LinearLayout>
 

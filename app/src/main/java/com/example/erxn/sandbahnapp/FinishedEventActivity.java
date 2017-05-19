@@ -23,7 +23,7 @@ public class FinishedEventActivity extends AppCompatActivity {
     private void iniControlls() {
         listFinishedEvents = (ListView)findViewById(R.id.LIST_FINISHED_RACES);
         events = getEventsFromDB();
-        AdapterRace myAdapter = new AdapterRace(this, events);
+        AdapterRace myAdapter = new AdapterRace(this, events, true);
         listFinishedEvents.setAdapter(myAdapter);
     }
 

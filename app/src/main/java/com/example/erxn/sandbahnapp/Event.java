@@ -14,7 +14,8 @@ public class Event {
     private String eventOrt;
     private ArrayList<Driver> listDriver;
     private int anzahlDrivers;
-    private int finished = 0;       // DB kennt kein boolean... deshalb int!
+    private boolean isCustom;
+    private int finished = 0;       // Event abgeschlossen?
 
 
     public Event() {
@@ -85,6 +86,18 @@ public class Event {
 
     public void setUnfinished() {
         this.finished = 0;
+    }
+
+    public void isFast() {
+        this.isCustom = false;
+    }
+
+    public boolean eventTypeIsCustom() {
+        return this.isCustom;
+    }
+
+    public void isCustom() {
+        this.isCustom = true;
     }
 
     public int getAnzahlDrivers() {

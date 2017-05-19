@@ -7,4 +7,7 @@
     <color name="colorAccent">#5B7876</color>
     <color name="colorGrey">#8F9E8B</color>
     <color name="colorPrimary">#F2E6B6</color>
+    <color name="colorFirstPlace">#FF978334</color>
+    <color name="colorSecondPlace">#898989</color>
+    <color name="colorThirdPlace">#c18d62</color>
 </resources>

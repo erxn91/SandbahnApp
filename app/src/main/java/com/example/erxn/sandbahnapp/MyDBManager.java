@@ -28,6 +28,7 @@ public class MyDBManager extends SQLiteOpenHelper {
     private static final String SPALTE_DRIVER_ID = "ID";
     private static final String SPALTE_DRIVER_NAME = "Name";
     private static final String SPALTE_DRIVER_MACHINE = "Maschine";
+    private static final String SPALTE_DRIVER_PLACE = "Platzierung";
     private static final String SPALTE_EVENT_ID_FK = "Event_ID";
 
     public MyDBManager(Context cxt) {
@@ -58,16 +59,25 @@ public class MyDBManager extends SQLiteOpenHelper {
             Cursor meinZeiger;
             meinZeiger = db.rawQuery("SELECT * FROM " + TABELLE_EVENT, null);
             int idCounter = meinZeiger.getCount();
-            insertDrivers(event, idCounter);
+            // Drivers werden nur in DB geschrieben wenn das Event Custom ist!
+            if(event.eventTypeIsCustom()) insertDrivers(event, idCounter);
             return true;
         }
     }
 
-    public void finishEvent() {
+    public void finishEvents() {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(SPALTE_FINISHED, 1);
         String where = SPALTE_FINISHED + "= 0";
+        db.update(TABELLE_EVENT, values, where, null);
+    }
+
+    public void finishEvents(int eventID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(SPALTE_FINISHED, 1);
+        String where = SPALTE_FINISHED + "= 0" + " AND " + SPALTE_EVENT_ID + "= " + Integer.toString(eventID);
         db.update(TABELLE_EVENT, values, where, null);
     }
 
@@ -147,6 +157,7 @@ public class MyDBManager extends SQLiteOpenHelper {
             ContentValues neueZeile = new ContentValues();
             neueZeile.put(SPALTE_DRIVER_NAME, driver.getName());
             neueZeile.put(SPALTE_DRIVER_MACHINE, driver.getMachine());
+            neueZeile.put(SPALTE_DRIVER_PLACE, driver.getPlace());
             neueZeile.put(SPALTE_EVENT_ID_FK, eventID);
             long result = db.insert(TABELLE_DRIVERS, null, neueZeile);
             if(result == -1) {
@@ -161,12 +172,13 @@ public class MyDBManager extends SQLiteOpenHelper {
         String id = Integer.toString(eventID);
         Cursor meinZeiger;
         meinZeiger = db.rawQuery("SELECT * FROM " + TABELLE_DRIVERS +
-                " WHERE " + SPALTE_EVENT_ID_FK + "= " + id, null);
+                " WHERE " + SPALTE_EVENT_ID_FK + "= " + id +
+                " ORDER BY " + SPALTE_DRIVER_PLACE, null);
         return meinZeiger;
     }
 
     public ArrayList<Driver> getDriversOfEvent(int eventID) {
-        ArrayList<Driver> drivers = new ArrayList<Driver>();
+        ArrayList<Driver> drivers = new ArrayList<>();
         Cursor meinZeiger = selectDriversOfEvent(eventID);
 
         // Cursor auf Position -1 setzen, sodass er im while-loop vorne beginnt
@@ -176,7 +188,9 @@ public class MyDBManager extends SQLiteOpenHelper {
             while(meinZeiger.moveToNext()) {
                 String driverName = meinZeiger.getString(meinZeiger.getColumnIndex(SPALTE_DRIVER_NAME));
                 String driverMachine = meinZeiger.getString(meinZeiger.getColumnIndex(SPALTE_DRIVER_MACHINE));
+                int driverPlace = meinZeiger.getInt(meinZeiger.getColumnIndex(SPALTE_DRIVER_PLACE));
                 Driver driver = new Driver(driverName, driverMachine);
+                driver.setPlace(driverPlace);
                 drivers.add(driver);
             }
         } finally {
@@ -202,6 +216,7 @@ public class MyDBManager extends SQLiteOpenHelper {
                         SPALTE_DRIVER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                         SPALTE_DRIVER_NAME + " TEXT," +
                         SPALTE_DRIVER_MACHINE + " TEXT," +
+                        SPALTE_DRIVER_PLACE + " INTEGER," +
                         SPALTE_EVENT_ID_FK + " INTEGER" +
                         ")"
         );

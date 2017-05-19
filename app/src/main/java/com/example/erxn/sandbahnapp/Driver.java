@@ -6,6 +6,7 @@ public class Driver {
 
     private String name;
     private String machine;
+    private int place;
 
     public Driver(String name, String machine) {
         this.name = name;
@@ -18,6 +19,14 @@ public class Driver {
 
     public String getMachine() {
         return this.machine;
+    }
+
+    public int getPlace() {
+        return this.place;
+    }
+
+    public void setPlace(int place) {
+        this.place = place;
     }
 
     public void setName(String value) {

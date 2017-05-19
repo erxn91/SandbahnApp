@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -19,6 +20,7 @@ public class AddSomeDriversActivity extends AppCompatActivity {
     String eventOrt;
     Button addButton;
     Button removeButton;
+    ArrayList<Driver> drivers;
 
     Timer T;
     boolean isButtonLongPressed = false;
@@ -95,6 +97,15 @@ public class AddSomeDriversActivity extends AppCompatActivity {
         e.setAnzahlDrivers(driverCount);
         e.setEventDate();
         e.setEventYear();
+        e.isFast();
+
+        // Drivers
+        drivers = new ArrayList<>();
+        for(int i = 1; i <= driverCount; i++) {
+            Driver driver = new Driver("Fahrer " + i, "keine Maschine");
+            drivers.add(driver);
+        }
+        e.setDrivers(drivers);
         return e;
     }
 

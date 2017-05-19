@@ -22,13 +22,15 @@ public class AdapterRace extends BaseAdapter {
     TextView tvYearOfEvent;
     TextView tvOrt;
     TextView tvAnzahlDrivers;
+    boolean eventIsFinished;
 
     private static LayoutInflater inflater = null;
-    public AdapterRace(Activity someActivity, ArrayList<Event> eventsFinished) {
+    public AdapterRace(Activity someActivity, ArrayList<Event> eventsFinished, boolean eventIsFinished) {
         // TODO Auto-generated constructor stub
         events = new Event[eventsFinished.size()];      // Array in Größe der ArrayList
         eventsFinished.toArray(events);                 // ArrayList in Array casten
         context = someActivity;
+        this.eventIsFinished = eventIsFinished;
         inflater = ( LayoutInflater )context.
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -67,7 +69,9 @@ public class AdapterRace extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                Intent myIntent = new Intent(context, EventDetailActivity.class);
+                Intent myIntent;
+                if(eventIsFinished) myIntent = new Intent(context, FinishedEventDetailActivity.class);
+                else myIntent = new Intent(context, NotFinishedEventDetailActivity.class);
                 myIntent.putExtra("EVENT_ID", events[position].getEventID());
                 context.startActivity(myIntent);
             }

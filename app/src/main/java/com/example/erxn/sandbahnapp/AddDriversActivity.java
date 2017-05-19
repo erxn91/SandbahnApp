@@ -46,6 +46,7 @@ public class AddDriversActivity extends AppCompatActivity {
             event.setEventOrt(eventOrt);
             event.setAnzahlDrivers(listOfDrivers.getCount());
             event.setDrivers(drivers);
+            event.isCustom();
             return event;
     }
 
@@ -86,7 +87,8 @@ public class AddDriversActivity extends AppCompatActivity {
             if(driverName.getText().toString().length() == 0) driverName.setError("Bitte Namen des Fahrers eingeben");
             else {
                 if(driverMachine.getText().toString().length() == 0) strDriverMachine = "keine Maschine";
-                Driver driver = new Driver(driverName.getText().toString(),strDriverMachine);
+                Driver driver = new Driver(driverName.getText().toString(), strDriverMachine);
+                driver.setPlace(0);
                 drivers.add(driver);
 
                 driverName.setText("");
