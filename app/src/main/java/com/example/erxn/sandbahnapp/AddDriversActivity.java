@@ -1,10 +1,12 @@
 package com.example.erxn.sandbahnapp;
 
+
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -28,18 +30,19 @@ public class AddDriversActivity extends AppCompatActivity {
 
     private void initControlls() {
         listOfDrivers = (ListView)findViewById(R.id.LIST_ADD_DRIVERS);
-        drivers = new ArrayList<Driver>();
+        drivers = new ArrayList<>();
 
         Intent myIntent = getIntent();
         eventOrt = myIntent.getStringExtra("EVENTORT");
 
-        AdapterAddDrivers adapter = new AdapterAddDrivers(this, drivers);
+        AdapterDriverList adapter = new AdapterDriverList(this, drivers, true);
         listOfDrivers.setAdapter(adapter);
     }
 
     private Event initEvent() {
             event = new Event();
             event.setEventDate();
+            event.setEventYear();
             event.setEventOrt(eventOrt);
             event.setAnzahlDrivers(listOfDrivers.getCount());
             event.setDrivers(drivers);
@@ -51,14 +54,39 @@ public class AddDriversActivity extends AppCompatActivity {
         db.insertEvent(e);
     }
 
+    private AlertDialog.Builder getBuilder() {
+        final Intent myIntent = new Intent(this, MainActivity.class);
+
+        // Bestätigungsdialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Event erstellen?")
+                .setMessage("Danach kannst du keine Fahrer mehr hinzufügen!")
+                .setPositiveButton("Ja Event erstellen", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // wenn Event erstellt wird
+                        saveInDB(initEvent());
+                        startActivity(myIntent);
+                    }
+                })
+                .setNegativeButton("Bin noch nicht fertig", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // nichts unternehmen
+                    }
+                });
+        return builder;
+    }
+
     public void clicked(View v) {
         if(v.getId() == R.id.BUTTON_ADD_DRIVER_TO_LIST) {
             EditText driverName = (EditText)findViewById(R.id.ET_DRIVER_NAME);
             EditText driverMachine = (EditText)findViewById(R.id.ET_DRIVER_MACHINE);
+            String strDriverMachine = driverMachine.getText().toString();
             // wenn EditText für Name leer
             if(driverName.getText().toString().length() == 0) driverName.setError("Bitte Namen des Fahrers eingeben");
             else {
-                Driver driver = new Driver(driverName.getText().toString(), driverMachine.getText().toString());
+                if(driverMachine.getText().toString().length() == 0) strDriverMachine = "keine Maschine";
+                Driver driver = new Driver(driverName.getText().toString(),strDriverMachine);
                 drivers.add(driver);
 
                 driverName.setText("");
@@ -66,7 +94,7 @@ public class AddDriversActivity extends AppCompatActivity {
 
                 Toast.makeText(this, "Fahrer hinzugefügt", Toast.LENGTH_SHORT);
 
-                AdapterAddDrivers adapter = new AdapterAddDrivers(this, drivers);
+                AdapterDriverList adapter = new AdapterDriverList(this, drivers, true);
                 listOfDrivers.setAdapter(adapter);
             }
         }
@@ -76,13 +104,11 @@ public class AddDriversActivity extends AppCompatActivity {
 
             Toast.makeText(this, "Fahrer gelöscht", Toast.LENGTH_SHORT).show();
 
-            AdapterAddDrivers adapter = new AdapterAddDrivers(this, drivers);
+            AdapterDriverList adapter = new AdapterDriverList(this, drivers, true);
             listOfDrivers.setAdapter(adapter);
         }
         if(v.getId() == R.id.BUTTON_EVENT_ERSTELLEN) {
-            saveInDB(initEvent());
-            Intent myIntent = new Intent(this, MainActivity.class);
-            startActivity(myIntent);
+            getBuilder().show();
         }
     }
 }

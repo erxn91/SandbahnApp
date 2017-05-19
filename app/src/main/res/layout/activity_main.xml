@@ -44,6 +44,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
                                 android:textColor="@color/colorWhite"
+                                android:textStyle="bold"
                                 android:textSize="16sp"
                                 android:text="Event erstellen"/>
 
@@ -71,6 +72,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
                                 android:textColor="@color/colorWhite"
+                                android:textStyle="bold"
                                 android:textSize="16sp"
                                 android:text="laufende Events"/>
 
@@ -98,6 +100,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
                                 android:textColor="@color/colorWhite"
+                                android:textStyle="bold"
                                 android:textSize="16sp"
                                 android:text="abgeschl. Events"/>
 
@@ -128,6 +131,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:textColor="@color/colorWhite"
+                            android:textStyle="bold"
                             android:textSize="16sp"
                             android:text="Credits"/>
 

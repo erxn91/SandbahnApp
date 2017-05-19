@@ -93,6 +93,8 @@ public class AddSomeDriversActivity extends AppCompatActivity {
         Event e = new Event();
         e.setEventOrt(eventOrt);
         e.setAnzahlDrivers(driverCount);
+        e.setEventDate();
+        e.setEventYear();
         return e;
     }
 

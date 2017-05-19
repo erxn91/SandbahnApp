@@ -25,9 +25,7 @@
         </activity>
         <activity android:name=".AddDriversActivity">
         </activity>
-        <activity android:name=".NotFinishedEventDetail">
-        </activity>
-        <activity android:name=".ListDriverDetailActivity">
+        <activity android:name=".EventDetailActivity">
         </activity>
         <activity android:name=".ChooseEventTypeActivity">
         </activity>

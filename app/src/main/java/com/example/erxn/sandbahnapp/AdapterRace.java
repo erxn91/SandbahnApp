@@ -5,14 +5,12 @@ package com.example.erxn.sandbahnapp;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.provider.CalendarContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -61,15 +59,15 @@ public class AdapterRace extends BaseAdapter {
         tvOrt=(TextView) rowView.findViewById(R.id.ORT_EVENT);
         tvYearOfEvent=(TextView) rowView.findViewById(R.id.YEAR_OF_EVENT);
         tvAnzahlDrivers=(TextView) rowView.findViewById(R.id.ANZAHL_DRIVERS);
-        tvDate.setText(events[position].getFormatEventDate());
-        tvYearOfEvent.setText(events[position].getFormatEventYear());
+        tvDate.setText(events[position].getEventDate());
+        tvYearOfEvent.setText(events[position].getEventYear());
         tvOrt.setText(events[position].getEventOrt());
         tvAnzahlDrivers.setText(Integer.toString(events[position].getAnzahlDrivers()) + " Teilnehmer");
         rowView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                Intent myIntent = new Intent(context, NotFinishedEventDetail.class);
+                Intent myIntent = new Intent(context, EventDetailActivity.class);
                 myIntent.putExtra("EVENT_ID", events[position].getEventID());
                 context.startActivity(myIntent);
             }

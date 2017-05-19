@@ -10,6 +10,7 @@ public class Event {
     private int eventID;
     private Calendar cal;
     private String eventDate;
+    private String eventYear;
     private String eventOrt;
     private ArrayList<Driver> listDriver;
     private int anzahlDrivers;
@@ -24,9 +25,7 @@ public class Event {
     }
 
     public void setEventDate() {
-        eventDate = cal.get(Calendar.DAY_OF_MONTH) + "." +
-                (cal.get(Calendar.MONTH) + 1) + "." +
-                cal.get(Calendar.YEAR);
+        this.eventDate = getFormatEventDate();
     }
 
     public void setDrivers(ArrayList<Driver> drivers) {
@@ -54,18 +53,26 @@ public class Event {
     }
 
     // Methode um das Event-Datum, passend formatiert für die ListView, zurückzugeben
-    public String getFormatEventDate() {
+    private String getFormatEventDate() {
         String eventFormat = "";
         String[] months = {"JAN", "FEB", "MÄR", "APR", "MAI", "JUN", "JUL", "AUG", "SEP", "OKT", "NOV", "DEZ"};
 
-        eventFormat = cal.get(Calendar.DAY_OF_MONTH) + "." + months[cal.get(Calendar.MONTH)] + getFormatEventYear();
+        eventFormat = cal.get(Calendar.DAY_OF_MONTH) + "." + months[cal.get(Calendar.MONTH)];
         return eventFormat;
     }
 
     // Methode um das Event-Jahr, passend formatiert für die ListView, zurückzugeben
-    public String getFormatEventYear() {
+    private String getFormatEventYear() {
         String formatEventYear = Integer.toString(cal.get(Calendar.YEAR));
         return "'" + formatEventYear.charAt(2) + formatEventYear.charAt(3);
+    }
+
+    public void setEventYear() {
+        this.eventYear = getFormatEventYear();
+    }
+
+    public String getEventYear() {
+        return this.eventYear;
     }
 
     public int isFinished() {

@@ -44,7 +44,7 @@ public class MyDBManager extends SQLiteOpenHelper {
     public boolean insertEvent(Event event) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues neueZeile = new ContentValues();
-        neueZeile.put(SPALTE_EVENT_DATUM, event.getFormatEventDate());
+        neueZeile.put(SPALTE_EVENT_DATUM, event.getEventDate() + event.getEventYear());
         neueZeile.put(SPALTE_EVENT_ORT, event.getEventOrt());
         neueZeile.put(SPALTE_ANZAHL_DRIVERS, event.getAnzahlDrivers());
         neueZeile.put(SPALTE_FINISHED, event.isFinished());
