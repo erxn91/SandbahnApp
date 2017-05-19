@@ -18,8 +18,23 @@
     <ListView
             android:id="@+id/LIST_NOT_FINISHED_RACES"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"/>
 
-    </ListView>
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <TextView
+                android:id="@+id/TV_DEFAULT_MSSG"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textSize="20sp"
+                android:textColor="@color/colorGrey"
+                android:text="noch keine Events erstellt"/>
+
+    </RelativeLayout>
+
+
 
 </LinearLayout>

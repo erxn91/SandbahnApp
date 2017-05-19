@@ -6,14 +6,18 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
 public class NotFinishedEventActivity extends AppCompatActivity {
 
     ListView listNotFinishedEvents;
+    Button btFinishEverything;
     ArrayList<Event> events;
+    TextView tvDefaultMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,9 +29,19 @@ public class NotFinishedEventActivity extends AppCompatActivity {
 
     private void initControlls() {
         listNotFinishedEvents = (ListView)findViewById(R.id.LIST_NOT_FINISHED_RACES);
+        btFinishEverything = (Button)findViewById(R.id.FINISHEVERYTHING);
+        tvDefaultMessage = (TextView)findViewById(R.id.TV_DEFAULT_MSSG);
         events = getEventsFromDB();
-        AdapterRace myAdapter = new AdapterRace(this, events, false);
-        listNotFinishedEvents.setAdapter(myAdapter);
+
+        if(!events.isEmpty()) {
+            AdapterRace myAdapter = new AdapterRace(this, events, false);
+            listNotFinishedEvents.setAdapter(myAdapter);
+            tvDefaultMessage.setVisibility(View.GONE);
+        }
+        else {
+            btFinishEverything.setVisibility(View.GONE);
+            listNotFinishedEvents.setVisibility(View.GONE);
+        }
     }
 
     private void finishEvent() {

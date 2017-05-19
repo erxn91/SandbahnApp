@@ -28,7 +28,7 @@ public class AddSomeDriversActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_event_02);
+        setContentView(R.layout.activity_add_some_drivers);
 
         initControlls();
     }
