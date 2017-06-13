@@ -1,13 +1,14 @@
-// Created by erxn on 16.05.2017.
-
 package com.example.erxn.sandbahnapp;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -18,6 +19,7 @@ public class AdapterDriverList extends BaseAdapter {
 
     TextView tvDriverName;
     TextView tvDriverMachine;
+    TextView tvStartnummer;
     Button btRemoveDriver;
     boolean driverRemoveable;       // Sollen die Fahrer in der Liste löschbar sein?
 
@@ -57,12 +59,18 @@ public class AdapterDriverList extends BaseAdapter {
         rowView = inflater.inflate(R.layout.list_item_add_drivers, null);
         tvDriverName = (TextView) rowView.findViewById(R.id.TV_NAME);
         tvDriverMachine = (TextView) rowView.findViewById(R.id.TV_MACHINE);
+        tvStartnummer = (TextView) rowView.findViewById(R.id.TV_STARTNUMMER);
         btRemoveDriver = (Button) rowView.findViewById(R.id.BUTTON_DELETE_DRIVER);
 
-        if(!driverRemoveable) btRemoveDriver.setVisibility(View.GONE);
+        if(!driverRemoveable) {
+            btRemoveDriver.setVisibility(View.GONE);
+            tvStartnummer.setVisibility(View.VISIBLE);
+        }
 
         tvDriverName.setText(drivers[position].getName());
         tvDriverMachine.setText(drivers[position].getMachine());
+        tvStartnummer.setText("SN: " + drivers[position].getStartnummer());
+
         rowView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -1,5 +1,3 @@
-// Created by erxn on 26.04.2017.
-
 package com.example.erxn.sandbahnapp;
 
 import android.app.Activity;

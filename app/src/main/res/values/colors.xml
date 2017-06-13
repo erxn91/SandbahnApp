@@ -2,6 +2,7 @@
 <resources>
     <color name="colorCreme">#dddcc5</color>
     <color name="colorWhite">#FFECECEC</color>
+    <color name="colorGreyBackground">#dedddd</color>
     <color name="colorPrimaryDark">#1d2326</color>
     <color name="colorDark">#21272b</color>
     <color name="colorAccent">#5B7876</color>

@@ -1,5 +1,3 @@
-// Created by erxn on 27.04.2017.
-
 package com.example.erxn.sandbahnapp;
 
 import android.content.ContentValues;
@@ -26,6 +24,7 @@ public class MyDBManager extends SQLiteOpenHelper {
 
     private static final String TABELLE_DRIVERS = "Fahrer";
     private static final String SPALTE_DRIVER_ID = "ID";
+    private static final String SPALTE_DRIVER_STARTNUM = "Startnummer";
     private static final String SPALTE_DRIVER_NAME = "Name";
     private static final String SPALTE_DRIVER_MACHINE = "Maschine";
     private static final String SPALTE_DRIVER_PLACE = "Platzierung";
@@ -155,6 +154,7 @@ public class MyDBManager extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         for(Driver driver : drivers) {
             ContentValues neueZeile = new ContentValues();
+            neueZeile.put(SPALTE_DRIVER_STARTNUM, driver.getStartnummer());
             neueZeile.put(SPALTE_DRIVER_NAME, driver.getName());
             neueZeile.put(SPALTE_DRIVER_MACHINE, driver.getMachine());
             neueZeile.put(SPALTE_DRIVER_PLACE, driver.getPlace());
@@ -183,13 +183,15 @@ public class MyDBManager extends SQLiteOpenHelper {
 
         // Cursor auf Position -1 setzen, sodass er im while-loop vorne beginnt
         meinZeiger.moveToPosition(-1);
+        int driverIDCnt = 0;
 
         try {
             while(meinZeiger.moveToNext()) {
+                int driverStartNum = meinZeiger.getInt(meinZeiger.getColumnIndex(SPALTE_DRIVER_STARTNUM));
                 String driverName = meinZeiger.getString(meinZeiger.getColumnIndex(SPALTE_DRIVER_NAME));
                 String driverMachine = meinZeiger.getString(meinZeiger.getColumnIndex(SPALTE_DRIVER_MACHINE));
                 int driverPlace = meinZeiger.getInt(meinZeiger.getColumnIndex(SPALTE_DRIVER_PLACE));
-                Driver driver = new Driver(driverName, driverMachine);
+                Driver driver = new Driver(driverName, driverMachine, driverStartNum, ++driverIDCnt);
                 driver.setPlace(driverPlace);
                 drivers.add(driver);
             }
@@ -214,6 +216,7 @@ public class MyDBManager extends SQLiteOpenHelper {
         db.execSQL(
                 "CREATE TABLE " + TABELLE_DRIVERS + " (" +
                         SPALTE_DRIVER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        SPALTE_DRIVER_STARTNUM + " INTEGER," +
                         SPALTE_DRIVER_NAME + " TEXT," +
                         SPALTE_DRIVER_MACHINE + " TEXT," +
                         SPALTE_DRIVER_PLACE + " INTEGER," +

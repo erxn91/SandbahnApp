@@ -31,6 +31,8 @@
         </activity>
         <activity android:name=".FinishedEventDetailActivity">
         </activity>
+        <activity android:name=".NotFinishedRaceActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -45,5 +45,14 @@
                 android:text="Löschen"
                 android:onClick="clicked"/>
 
+        <TextView
+                android:id="@+id/TV_STARTNUMMER"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="SN:"
+                android:textSize="18sp"
+                android:visibility="gone"/>
+
     </RelativeLayout>
 </LinearLayout>

@@ -19,6 +19,7 @@ public class AddDriversActivity extends AppCompatActivity {
     ArrayList<Driver> drivers;
     Event event;
     String eventOrt;
+    int startnummer = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +89,7 @@ public class AddDriversActivity extends AppCompatActivity {
             else {
                 if(driverMachine.getText().toString().length() == 0) strDriverMachine = "keine Maschine";
                 Driver driver = new Driver(driverName.getText().toString(), strDriverMachine);
+                driver.setStartnummer(++startnummer);
                 driver.setPlace(0);
                 drivers.add(driver);
 

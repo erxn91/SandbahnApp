@@ -123,5 +123,10 @@ public class NotFinishedEventDetailActivity extends AppCompatActivity {
             dialog.setCanceledOnTouchOutside(true);
             dialog.show();
         }
+        if(v.getId() == R.id.BUTTON_ZUM_RENNEN) {
+            Intent myIntent = new Intent(this, NotFinishedRaceActivity.class);
+            myIntent.putExtra("EVENT_ID", eventID);
+            startActivity(myIntent);
+        }
     }
 }
