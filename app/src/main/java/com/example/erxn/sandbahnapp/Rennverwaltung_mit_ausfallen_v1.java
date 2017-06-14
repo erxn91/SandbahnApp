@@ -1,5 +1,8 @@
 package com.example.erxn.sandbahnapp;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -9,11 +12,13 @@ public class Rennverwaltung_mit_ausfallen_v1 extends RennverwaltungMitAusfallenB
 
     private ArrayList<Race> verbotene_rennen;
     private ArrayList<Race> gefahrene_rennen;
+    private Context context;
 
-    public Rennverwaltung_mit_ausfallen_v1(Driver[] drivers){
+    public Rennverwaltung_mit_ausfallen_v1(Driver[] drivers, Context context){
         drivernum = 0;
         renncnt = 0;
         this.drivers = drivers;
+        this.context = context;
         moegliche_rennen = Race.hoch3(drivers);
         verbotene_rennen = new ArrayList<>();
         gefahrene_rennen = new ArrayList<>();
@@ -108,16 +113,27 @@ public class Rennverwaltung_mit_ausfallen_v1 extends RennverwaltungMitAusfallenB
         gezogene_rennen.remove(thisrace);
         gefahrene_rennen.add(thisrace);
 
+        //Datenbankverbindung öffnen, um Punkte direkt in die DB zu schreiben.
+        MyDBManager db = new MyDBManager(context);
+
         //Ausgefallene Fahrer rauswerfen, ansonsten Punkte zuweisen
         for (Driver d : thisrace)
             if (!d.isAusgefallen()){
                 d.incrementAnzahlrennen();
-                if (d == thisrace.get(winner))
+                if (d == thisrace.get(winner)) {
                     d.raisePunkte(3);
-                if (d == thisrace.get(second))
+                    db.addDriverRacePoints(d.getDriverID(), 3);
+                    Toast.makeText(context, "3 Punkte hinzugefügt", Toast.LENGTH_SHORT).show();
+                }
+
+                if (d == thisrace.get(second)) {
                     d.raisePunkte(2);
-                if (d == thisrace.get(third))
+                    db.addDriverRacePoints(d.getDriverID(), 2);
+                }
+                if (d == thisrace.get(third)) {
                     d.raisePunkte(1);
+                    db.addDriverRacePoints(d.getDriverID(), 1);
+                }
             }
 
     }

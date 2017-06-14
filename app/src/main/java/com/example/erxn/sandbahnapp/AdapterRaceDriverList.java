@@ -3,7 +3,6 @@ package com.example.erxn.sandbahnapp;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,34 +14,34 @@ import java.util.ArrayList;
 public class AdapterRaceDriverList extends BaseAdapter {
 
     Race[] races;
+    Race race;
     Context context;
+    Rennverwaltung_mit_ausfallen_v1 rennen;
 
     TextView tvDriverName;
     TextView tvNumberRace;
-    TextView tvFirstDriver;
-    TextView tvSecondDriver;
-    TextView tvThirdDriver;
+    TextView tvFahrer;
+    Switch sw_ausfall;
+    Button btGoOn;
 
-    RadioGroup rgFirstDriver;
-    RadioGroup rgSecondDriver;
-    RadioGroup rgThirdDriver;
+    View myView;
+    Dialog dialog;
+    int cntDrivers;
 
-    int firstDriverPlace;
-    int secondDriverPlace;
-    int thirdDriverPlace;
-
-    View myView = inflater.inflate(R.layout.complete_race, null);
+    boolean[] ausfaelle = new boolean[3];
 
     private static LayoutInflater inflater = null;
-    public AdapterRaceDriverList(Activity someActivity, ArrayList<Race> races) {
+    public AdapterRaceDriverList(Activity someActivity,
+                                 ArrayList<Race> races,
+                                 Rennverwaltung_mit_ausfallen_v1 rennen) {
         // TODO Auto-generated constructor stub
         this.races = new Race[races.size()];            // Array in Größe der ArrayList
         races.toArray(this.races);                  // ArrayList in Array casten
         context = someActivity;
         inflater = ( LayoutInflater )context.
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.rennen = rennen;
     }
-
 
     @Override
     public int getCount() {
@@ -64,69 +63,8 @@ public class AdapterRaceDriverList extends BaseAdapter {
     private AlertDialog.Builder getBuilder(final View myView) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Ergebnis des Rennens")
-                .setView(myView)
-                .setPositiveButton("Rennen abschließen", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // RBs auswerten
-                        int selectedIDFirst = rgFirstDriver.getCheckedRadioButtonId();
-                        int selectedIDSecond = rgSecondDriver.getCheckedRadioButtonId();
-                        int selectedIDThird = rgThirdDriver.getCheckedRadioButtonId();
-                        RadioButton rbFirstDriver = (RadioButton) myView.findViewById(selectedIDFirst);
-                        RadioButton rbSecondDriver = (RadioButton) myView.findViewById(selectedIDSecond);
-                        RadioButton rbThirdDriver = (RadioButton) myView.findViewById(selectedIDThird);
-
-                        platzierungenAuswerten(rbFirstDriver, rbSecondDriver, rbThirdDriver);
-                    }
-                });
+                .setView(myView);
         return builder;
-    }
-
-    private void platzierungenAuswerten(RadioButton rb1, RadioButton rb2, RadioButton rb3) {
-        switch(rb1.getId()) {
-            case R.id.RB_FIRST_PLACE1 :
-                firstDriverPlace = 0;
-                break;
-            case R.id.RB_FIRST_PLACE2 :
-                firstDriverPlace = 1;
-                break;
-            case R.id.RB_FIRST_PLACE3 :
-                firstDriverPlace = 2;
-                break;
-            case R.id.RB_FIRST_AUSG :
-                firstDriverPlace = -1;
-                break;
-        }
-
-        switch(rb2.getId()) {
-            case R.id.RB_SECOND_PLACE1 :
-                secondDriverPlace = 0;
-                break;
-            case R.id.RB_SECOND_PLACE2 :
-                secondDriverPlace = 1;
-                break;
-            case R.id.RB_SECOND_PLACE3 :
-                secondDriverPlace = 2;
-                break;
-            case R.id.RB_SECOND_AUSG :
-                secondDriverPlace = -1;
-                break;
-        }
-
-        switch(rb3.getId()) {
-            case R.id.RB_THIRD_PLACE1 :
-                thirdDriverPlace = 0;
-                break;
-            case R.id.RB_THIRD_PLACE2 :
-                thirdDriverPlace = 1;
-                break;
-            case R.id.RB_THIRD_PLACE3 :
-                thirdDriverPlace = 2;
-                break;
-            case R.id.RB_THIRD_AUSG :
-                thirdDriverPlace = -1;
-                break;
-        }
     }
 
     @Override
@@ -143,18 +81,50 @@ public class AdapterRaceDriverList extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-/*
-                tvFirstDriver = (TextView) myView.findViewById(R.id.TV_DRIVER_IN_RACE_FIRST);
-                tvSecondDriver = (TextView) myView.findViewById(R.id.TV_DRIVER_IN_RACE_SECOND);
-                tvThirdDriver = (TextView) myView.findViewById(R.id.TV_DRIVER_IN_RACE_THIRD);
+                final int[] places = new int[3];
+                cntDrivers = 0;
+                race = races[position];
+                myView = inflater.inflate(R.layout.complete_race, null);
+                tvFahrer = (TextView) myView.findViewById(R.id.TV_ONE_OF_THREE);
+                btGoOn = (Button) myView.findViewById(R.id.BUTTON_NEXT_DRIVER);
+                btGoOn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        RadioGroup rg = (RadioGroup) myView.findViewById(R.id.RG_FAHRER_PLATZ);
+                        sw_ausfall = (Switch) myView.findViewById(R.id.SW_AUSGEFALLEN);
+                        int selectedID = rg.getCheckedRadioButtonId();
 
-                rgFirstDriver = (RadioGroup) myView.findViewById(R.id.RG_FIRST_PLACE);
-                rgSecondDriver = (RadioGroup) myView.findViewById(R.id.RG_SECOND_PLACE);
-                rgThirdDriver = (RadioGroup) myView.findViewById(R.id.RG_THIRD_PLACE);
+                        switch(selectedID) {
+                            case R.id.RB_ERSTER:
+                                places[0] = cntDrivers;
+                                break;
+                            case R.id.RB_ZWEITER:
+                                places[1] = cntDrivers;
+                                break;
+                            case R.id.RB_DRITTER:
+                                places[2] = cntDrivers;
+                                break;
+                        }
 
-                final Dialog dialog = getBuilder(myView).create();
+                        // wenn alle Plätze verteilt wurden, wird Dialog geschlossen
+                        // und Punkte werden verteilt
+                        if(cntDrivers == 2) {
+                            dialog.hide();
+                            rennen.evaluate(places[0], places[1], places[2],
+                                    false, false, false);
+                        }
+                        else {
+                            tvFahrer.setText(race.get(++cntDrivers).getName());
+                        }
+                    }
+                });
+                if(cntDrivers == 0) {
+                    tvFahrer.setText(race.get(cntDrivers).getName());
+                }
+
+                dialog = getBuilder(myView).create();
                 dialog.setCanceledOnTouchOutside(true);
-                dialog.show();*/
+                dialog.show();
             }
         });
         return rowView;

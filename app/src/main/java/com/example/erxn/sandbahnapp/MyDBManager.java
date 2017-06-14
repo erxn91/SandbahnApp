@@ -28,6 +28,7 @@ public class MyDBManager extends SQLiteOpenHelper {
     private static final String SPALTE_DRIVER_NAME = "Name";
     private static final String SPALTE_DRIVER_MACHINE = "Maschine";
     private static final String SPALTE_DRIVER_PLACE = "Platzierung";
+    private static final String SPALTE_DRIVER_POINTS = "Punkte";
     private static final String SPALTE_EVENT_ID_FK = "Event_ID";
 
     public MyDBManager(Context cxt) {
@@ -173,8 +174,18 @@ public class MyDBManager extends SQLiteOpenHelper {
         Cursor meinZeiger;
         meinZeiger = db.rawQuery("SELECT * FROM " + TABELLE_DRIVERS +
                 " WHERE " + SPALTE_EVENT_ID_FK + "= " + id +
-                " ORDER BY " + SPALTE_DRIVER_PLACE, null);
+                " ORDER BY " + SPALTE_DRIVER_POINTS + " DESC", null);
         return meinZeiger;
+    }
+
+    public void addDriverRacePoints(int someDriverID, int points) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+            int pts = points;
+            int driverID = someDriverID;
+            values.put(SPALTE_DRIVER_POINTS, SPALTE_DRIVER_POINTS + " + " + pts);
+            String where =  SPALTE_DRIVER_ID + "= " + Integer.toString(driverID);
+            db.update(TABELLE_DRIVERS, values, where, null);
     }
 
     public ArrayList<Driver> getDriversOfEvent(int eventID) {
@@ -220,6 +231,7 @@ public class MyDBManager extends SQLiteOpenHelper {
                         SPALTE_DRIVER_NAME + " TEXT," +
                         SPALTE_DRIVER_MACHINE + " TEXT," +
                         SPALTE_DRIVER_PLACE + " INTEGER," +
+                        SPALTE_DRIVER_POINTS + " INTEGER," +
                         SPALTE_EVENT_ID_FK + " INTEGER" +
                         ")"
         );
