@@ -1,3 +1,10 @@
+/* In dieser Activity können einem schnellen Event, beliebig viele
+Fahrer hinzugefügt werden. Um die Usability etwas zu verbessern,
+können beide Buttons lange gedrückt werden, damit es etwas schneller geht.
+Fährt man fort, wird ein Event mit dem EventOrt und der Anzahl der Fahrer
+in die DB geschrieben.
+ */
+
 package com.example.erxn.sandbahnapp;
 
 import android.content.Intent;
@@ -34,6 +41,7 @@ public class AddSomeDriversActivity extends AppCompatActivity {
     }
 
     private void initControlls() {
+        // wird benötigt um Event zu erstellen
         eventOrt = getIntent().getStringExtra("EVENTORT");
 
         tvAnzahlDriver = (TextView)findViewById(R.id.TV_ANZAHL_DRIVER);
@@ -41,12 +49,18 @@ public class AddSomeDriversActivity extends AppCompatActivity {
         addButton = (Button)findViewById(R.id.BUTTON_ADD_DRIVER);
         removeButton = (Button)findViewById(R.id.BUTTON_REMOVE_DRIVER);
 
+        // EventListener fürs lange Drücken
         addButton.setOnLongClickListener(longTouchButton);
+        // EventListener fürs Beenden des langen Drückens
         addButton.setOnTouchListener(releaseButton);
+        // natürlich für beide Buttons
         removeButton.setOnLongClickListener(longTouchButton);
         removeButton.setOnTouchListener(releaseButton);
     }
 
+    // Beim langen Drücken einer der Buttons, wird ein Timer ausgelöst,
+    // der kein delay besitzt und in der vogegebenen Periode den
+    // DriverCount erhöht
     private void runFastDriverCount(final boolean up) {
         T = new Timer();
         T.scheduleAtFixedRate(new TimerTask() {
@@ -70,6 +84,7 @@ public class AddSomeDriversActivity extends AppCompatActivity {
         }, 0, 100);
     }
 
+    // Methode um den Timer zu stoppen
     private void stopFastDriverCount() {
         T.cancel();
     }
@@ -84,6 +99,7 @@ public class AddSomeDriversActivity extends AppCompatActivity {
             else tvAnzahlDriver.setText(--driverCount + " Fahrer");
         }
         if(v.getId() == R.id.BUTTON_GO_ON) {
+            // erstelltes Event in der Datenbank speichern
             saveInDB(initEvent());
 
             Intent myIntent = new Intent(this, MainActivity.class);
@@ -91,6 +107,8 @@ public class AddSomeDriversActivity extends AppCompatActivity {
         }
     }
 
+    // Event mit allen zur Verfügung stehenden Werten erzeugen
+    // Driver werden auch erzeugt und dem Event zugeordnet
     private Event initEvent() {
         Event e = new Event();
         e.setEventOrt(eventOrt);
@@ -103,17 +121,20 @@ public class AddSomeDriversActivity extends AppCompatActivity {
         drivers = new ArrayList<>();
         for(int i = 1; i <= driverCount; i++) {
             Driver driver = new Driver("Fahrer " + i, "keine Maschine");
+            driver.setStartnummer(i);
             drivers.add(driver);
         }
         e.setDrivers(drivers);
         return e;
     }
 
+    // Event als Parameter mitgeben um es in DB zu speichern
     private void saveInDB(Event e) {
         MyDBManager db = new MyDBManager(this);
         db.insertEvent(e);
     }
 
+    // Listener für das lange Drücken einer der Buttons
     private View.OnLongClickListener longTouchButton = new View.OnLongClickListener() {
         @Override
         public boolean onLongClick(View v) {
@@ -129,6 +150,7 @@ public class AddSomeDriversActivity extends AppCompatActivity {
         }
     };
 
+    // Listener für das Beenden des langen Drückens einer der Buttons
     private View.OnTouchListener releaseButton = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {

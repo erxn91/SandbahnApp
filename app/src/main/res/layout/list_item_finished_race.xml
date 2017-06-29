@@ -43,4 +43,25 @@
 
     </LinearLayout>
 
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <Button
+                    android:id="@+id/BUTTON_DELETE_EVENT"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_centerInParent="true"
+                    android:visibility="gone"
+                    android:background="@drawable/ic_clear_black_48dp"
+                    android:onClick="clicked"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
 </LinearLayout>

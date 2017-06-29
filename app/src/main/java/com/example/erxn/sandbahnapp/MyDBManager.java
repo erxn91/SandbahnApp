@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 
 
 public class MyDBManager extends SQLiteOpenHelper {
@@ -22,6 +24,7 @@ public class MyDBManager extends SQLiteOpenHelper {
     private static final String SPALTE_ANZAHL_DRIVERS = "AnzahlFahrer";
     private static final String SPALTE_FINISHED = "isFinished";
 
+    // Aufbau der Tabelle Driver
     private static final String TABELLE_DRIVERS = "Fahrer";
     private static final String SPALTE_DRIVER_ID = "ID";
     private static final String SPALTE_DRIVER_STARTNUM = "Startnummer";
@@ -31,9 +34,18 @@ public class MyDBManager extends SQLiteOpenHelper {
     private static final String SPALTE_DRIVER_POINTS = "Punkte";
     private static final String SPALTE_EVENT_ID_FK = "Event_ID";
 
+    private Context cxt;
+
     public MyDBManager(Context cxt) {
         super(cxt, DATABASE_NAME, null, DATABASE_VERSION);
+        this.cxt = cxt;
         SQLiteDatabase db = this.getWritableDatabase();
+    }
+
+    public void deleteTables() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DROP TABLE " + TABELLE_EVENT);
+        db.execSQL("DROP TABLE " + TABELLE_DRIVERS);
     }
 
 
@@ -55,16 +67,15 @@ public class MyDBManager extends SQLiteOpenHelper {
             return false;
         }
         else {
-            // letzte id der Event Tabelle auslesen um diese als FK für die Driver Tabelle zu nutzen!
-            Cursor meinZeiger;
-            meinZeiger = db.rawQuery("SELECT * FROM " + TABELLE_EVENT, null);
-            int idCounter = meinZeiger.getCount();
-            // Drivers werden nur in DB geschrieben wenn das Event Custom ist!
-            if(event.eventTypeIsCustom()) insertDrivers(event, idCounter);
+            int eventID = (int)result;
+            insertDrivers(event, eventID);
             return true;
         }
     }
 
+    // wenn keine EventID übergeben wird, werden allen Events,
+    // wo die Spalte_FINISHED noch 0 ist auf 1 gesetzt
+    // somit sind die Events abgeschlossen
     public void finishEvents() {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -73,6 +84,7 @@ public class MyDBManager extends SQLiteOpenHelper {
         db.update(TABELLE_EVENT, values, where, null);
     }
 
+    // hier kann mithilfe der eventID ein einzelnes Event abgeschlossen werden
     public void finishEvents(int eventID) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -93,8 +105,13 @@ public class MyDBManager extends SQLiteOpenHelper {
         return meinZeiger;
     }
 
+    // Einzelnes Event aus Datenbank holen und zurückgeben
     public Event getOneEvent(int eventID) {
+        // in selectOneEvent wird ein Zeiger zurückgegeben
         Cursor meinZeiger = selectOneEvent(eventID);
+
+        // neue Instanz eines Events erstellen und alle relevanten
+        // Daten aus dem Zeiger ins Event einfügen
         Event e = new Event();
         e.setEventID(meinZeiger.getInt(meinZeiger.getColumnIndex(SPALTE_EVENT_ID)));
         e.setEventDateFromDB(meinZeiger.getString(meinZeiger.getColumnIndex(SPALTE_EVENT_DATUM)));
@@ -143,12 +160,25 @@ public class MyDBManager extends SQLiteOpenHelper {
         return events;
     }
 
+    public void deleteEvent(int eventID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        // Event in der DB löschen
+        db.execSQL("DELETE FROM " + TABELLE_EVENT +
+                   " WHERE " + SPALTE_EVENT_ID + "= " + eventID);
+
+        // Driver des Events in der DB löschen
+        db.execSQL("DELETE FROM " + TABELLE_DRIVERS +
+                   " WHERE " + SPALTE_EVENT_ID_FK + "= " + eventID);
+    }
+
 
 
     /* Methoden für die Drivers Tabelle ----------------------------
     ----------------------------------------------------------------
      */
 
+    // Ähnlich zu den Event inserts werden hier Driver in die
+    // DB geschrieben
     private boolean insertDrivers(Event event, int eventID) {
         ArrayList<Driver> drivers = event.getDrivers();
 
@@ -178,32 +208,46 @@ public class MyDBManager extends SQLiteOpenHelper {
         return meinZeiger;
     }
 
-    public void addDriverRacePoints(int someDriverID, int points) {
+    // Die Punkte der einzelnen Driver in DB schreiben,
+    // Driver werden mit Driver-Array übergeben
+    public void addDriverRacePoints(Driver[] drivers) {
+        Arrays.sort(drivers, new Comparator<Driver>() {
+            @Override
+            public int compare(Driver o1, Driver o2) {
+                int n1 = o1.getPunkte();
+                int n2 = o2.getPunkte();
+                return n2-n1;
+            }
+        });
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-            int pts = points;
-            int driverID = someDriverID;
-            values.put(SPALTE_DRIVER_POINTS, SPALTE_DRIVER_POINTS + " + " + pts);
-            String where =  SPALTE_DRIVER_ID + "= " + Integer.toString(driverID);
+        for(Driver d : drivers) {
+            int pts = d.getPunkte();
+            int driverID = d.getDriverID();
+            values.put(SPALTE_DRIVER_POINTS, pts);
+            String where =  SPALTE_DRIVER_ID + "= " + driverID;
             db.update(TABELLE_DRIVERS, values, where, null);
+        }
     }
 
+    // alle Driver, die zu dem jeweiligen Event gehören
+    // werden aus der DB geholt
     public ArrayList<Driver> getDriversOfEvent(int eventID) {
         ArrayList<Driver> drivers = new ArrayList<>();
         Cursor meinZeiger = selectDriversOfEvent(eventID);
 
         // Cursor auf Position -1 setzen, sodass er im while-loop vorne beginnt
         meinZeiger.moveToPosition(-1);
-        int driverIDCnt = 0;
 
         try {
             while(meinZeiger.moveToNext()) {
                 int driverStartNum = meinZeiger.getInt(meinZeiger.getColumnIndex(SPALTE_DRIVER_STARTNUM));
                 String driverName = meinZeiger.getString(meinZeiger.getColumnIndex(SPALTE_DRIVER_NAME));
                 String driverMachine = meinZeiger.getString(meinZeiger.getColumnIndex(SPALTE_DRIVER_MACHINE));
-                int driverPlace = meinZeiger.getInt(meinZeiger.getColumnIndex(SPALTE_DRIVER_PLACE));
-                Driver driver = new Driver(driverName, driverMachine, driverStartNum, ++driverIDCnt);
-                driver.setPlace(driverPlace);
+                int driverPoints = meinZeiger.getInt(meinZeiger.getColumnIndex(SPALTE_DRIVER_POINTS));
+                int driverID = meinZeiger.getInt(meinZeiger.getColumnIndex(SPALTE_DRIVER_ID));
+                Driver driver = new Driver(driverName, driverMachine, driverStartNum, driverID);
+                driver.setPunkte(driverPoints);
                 drivers.add(driver);
             }
         } finally {
@@ -215,6 +259,7 @@ public class MyDBManager extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(
+                // Aufbau und Spezifizierung der Event Tabelle
                 "CREATE TABLE " + TABELLE_EVENT + " (" +
                         SPALTE_EVENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                         SPALTE_EVENT_DATUM + " TEXT," +
@@ -225,6 +270,7 @@ public class MyDBManager extends SQLiteOpenHelper {
         );
 
         db.execSQL(
+                // Aufbau und Spezifizierung der Driver Tabelle
                 "CREATE TABLE " + TABELLE_DRIVERS + " (" +
                         SPALTE_DRIVER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                         SPALTE_DRIVER_STARTNUM + " INTEGER," +

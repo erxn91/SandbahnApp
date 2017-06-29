@@ -5,6 +5,7 @@
               android:layout_height="match_parent">
 
     <LinearLayout
+            android:id="@+id/LIST_ITEM_DRIVER"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -16,19 +17,20 @@
                 android:orientation="horizontal">
 
             <TextView
-                    android:id="@+id/TV_NUMMER_RACE"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="R1"/>
-
-            <TextView
-                    android:id="@+id/TV_PAIRS"
+                    android:id="@+id/TV_DRIVER_NAME"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:textAlignment="center"
-                    android:text="Paarungen der Rennen"
+                    android:text="Name des Fahrers"
+                    android:layout_marginLeft="20dp"
                     android:layout_weight="1"/>
+
+            <TextView
+                    android:id="@+id/TV_DRIVER_PLACE"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="Punkte"/>
 
         </LinearLayout>
 

@@ -8,30 +8,52 @@
             android:label="@string/app_name"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+                android:name=".MainActivity"
+                android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".FinishedEventActivity">
+        <activity
+                android:name=".FinishedEventActivity"
+                android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".AddEventOrtActivity">
+        <activity
+                android:name=".AddEventOrtActivity"
+                android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".AddSomeDriversActivity">
+        <activity
+                android:name=".AddSomeDriversActivity"
+                android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".NotFinishedEventActivity">
+        <activity
+                android:name=".NotFinishedEventActivity"
+                android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".AddDriversActivity">
+        <activity
+                android:name=".AddDriversActivity"
+                android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".NotFinishedEventDetailActivity">
+        <activity
+                android:name=".NotFinishedEventDetailActivity"
+                android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".ChooseEventTypeActivity">
+        <activity
+                android:name=".ChooseEventTypeActivity"
+                android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".FinishedEventDetailActivity">
+        <activity
+                android:name=".FinishedEventDetailActivity"
+                android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".NotFinishedRaceActivity">
+        <activity
+                android:name=".NotFinishedRaceActivity"
+                android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".CreditsActivity">
         </activity>
     </application>
 

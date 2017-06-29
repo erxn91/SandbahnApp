@@ -1,5 +1,9 @@
-package com.example.erxn.sandbahnapp;
+/* Diese Activity listet alle noch nicht abgeschlossenen
+Events auf. Zusätzlich können alle Events auf einmal abgeschlossen
+werden.
+ */
 
+package com.example.erxn.sandbahnapp;
 
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
@@ -44,6 +48,7 @@ public class NotFinishedEventActivity extends AppCompatActivity {
         }
     }
 
+    // alle Events abschließen
     private void finishEvent() {
         MyDBManager db = new MyDBManager(this);
         db.finishEvents();
@@ -54,6 +59,7 @@ public class NotFinishedEventActivity extends AppCompatActivity {
         return db.getEvents(false);
     }
 
+    // Bestätigungsialog, ob alle Events abgeschlossen werden sollen
     private AlertDialog.Builder getBuilder() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Alle Events abschließen")

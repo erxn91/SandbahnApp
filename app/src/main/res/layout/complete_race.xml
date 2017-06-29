@@ -4,9 +4,21 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
+    <ListView
+            android:id="@+id/LIST_COMPLETE_RACES"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
+    <LinearLayout
+            android:id="@+id/LL_COMPLETE_RACES"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
     <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="30dp">
 
         <LinearLayout
@@ -21,13 +33,6 @@
                     android:layout_height="wrap_content"
                     android:text="Fahrer"
                     android:textSize="26sp"/>
-
-            <Switch
-                    android:id="@+id/SW_AUSGEFALLEN"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="Fahrer ausgefallen"/>
 
             <RadioGroup
                     android:id="@+id/RG_FAHRER_PLATZ"
@@ -58,16 +63,120 @@
 
             </RadioGroup>
 
-            <Button
-                    android:id="@+id/BUTTON_NEXT_DRIVER"
-                    android:layout_width="match_parent"
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp">
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_centerInParent="true">
+
+            <TextView
+                    android:id="@+id/TV_ONE_OF_THREE2"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="30dp"
-                    android:text="Weiter"/>
+                    android:text="Fahrer"
+                    android:textSize="26sp"/>
+
+            <RadioGroup
+                    android:id="@+id/RG_FAHRER_PLATZ2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="20dp">
+
+                <RadioButton
+                        android:id="@+id/RB_ERSTER2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Erster"/>
+
+                <RadioButton
+                        android:id="@+id/RB_ZWEITER2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Zweiter"
+                        android:layout_marginLeft="10dp"/>
+
+                <RadioButton
+                        android:id="@+id/RB_DRITTER2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Dritter"
+                        android:layout_marginLeft="10dp"/>
+
+            </RadioGroup>
 
         </LinearLayout>
 
     </RelativeLayout>
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp">
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_centerInParent="true">
+
+            <TextView
+                    android:id="@+id/TV_ONE_OF_THREE3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fahrer"
+                    android:textSize="26sp"/>
+
+            <RadioGroup
+                    android:id="@+id/RG_FAHRER_PLATZ3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="20dp">
+
+                <RadioButton
+                        android:id="@+id/RB_ERSTER3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Erster"/>
+
+                <RadioButton
+                        android:id="@+id/RB_ZWEITER3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Zweiter"
+                        android:layout_marginLeft="10dp"/>
+
+                <RadioButton
+                        android:id="@+id/RB_DRITTER3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Dritter"
+                        android:layout_marginLeft="10dp"/>
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <Button
+            android:id="@+id/BUTTON_NEXT_RACES"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:onClick="clicked"
+            android:text="Weiter"/>
+
+    </LinearLayout>
 
 </LinearLayout>

@@ -65,17 +65,7 @@ public class FinishedEventDetailActivity extends AppCompatActivity {
         // Drivers of Event
         drivers = new ArrayList<>();
         drivers = db.getDriversOfEvent(eventID);
-        if(drivers.isEmpty()) drivers = giveMeDriverList();
         winners = getWinnersOfEvent();
-    }
-
-    private ArrayList<Driver> giveMeDriverList() {
-        ArrayList<Driver> drivers = new ArrayList<>();
-        for(int i = 1; i <= event.getAnzahlDrivers(); i++) {
-            Driver driver = new Driver("Fahrer " + i, "keine Maschine");
-            drivers.add(driver);
-        }
-        return drivers;
     }
 
     private Driver[] getWinnersOfEvent() {
@@ -98,7 +88,7 @@ public class FinishedEventDetailActivity extends AppCompatActivity {
 
     public void clicked(View v) {
         if(v.getId() == R.id.BUTTON_LIST_DRIVERS_DETAIL) {
-            AdapterDriverList adapter = new AdapterDriverList(this, drivers, false);
+            AdapterDriverList adapter = new AdapterDriverList(this, drivers, false, true);
             ListView listOFDrivers = new ListView(this);
             listOFDrivers.setAdapter(adapter);
 

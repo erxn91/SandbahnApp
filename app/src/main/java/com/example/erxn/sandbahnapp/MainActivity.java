@@ -27,5 +27,9 @@ public class MainActivity extends AppCompatActivity {
             Intent myIntent = new Intent(this, FinishedEventActivity.class);
             startActivity(myIntent);
         }
+        if(v.getId() == R.id.LAYOUT_CREDITS ||v.getId() == R.id.BUTTON_CREDITS) {
+            Intent myIntent = new Intent(this, CreditsActivity.class);
+            startActivity(myIntent);
+        }
     }
 }

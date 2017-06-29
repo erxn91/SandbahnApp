@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class AdapterRace extends BaseAdapter {
     TextView tvYearOfEvent;
     TextView tvOrt;
     TextView tvAnzahlDrivers;
+    Button btDeleteEvent;
     boolean eventIsFinished;
 
     private static LayoutInflater inflater = null;
@@ -59,6 +61,7 @@ public class AdapterRace extends BaseAdapter {
         tvOrt=(TextView) rowView.findViewById(R.id.ORT_EVENT);
         tvYearOfEvent=(TextView) rowView.findViewById(R.id.YEAR_OF_EVENT);
         tvAnzahlDrivers=(TextView) rowView.findViewById(R.id.ANZAHL_DRIVERS);
+        btDeleteEvent = (Button) rowView.findViewById(R.id.BUTTON_DELETE_EVENT);
         tvDate.setText(events[position].getEventDate());
         tvYearOfEvent.setText(events[position].getEventYear());
         tvOrt.setText(events[position].getEventOrt());
@@ -72,6 +75,13 @@ public class AdapterRace extends BaseAdapter {
                 else myIntent = new Intent(context, NotFinishedEventDetailActivity.class);
                 myIntent.putExtra("EVENT_ID", events[position].getEventID());
                 context.startActivity(myIntent);
+            }
+        });
+        rowView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                btDeleteEvent.setVisibility(View.VISIBLE);
+                return false;
             }
         });
         return rowView;

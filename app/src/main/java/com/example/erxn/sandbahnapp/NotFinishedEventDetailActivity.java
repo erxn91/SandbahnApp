@@ -51,18 +51,7 @@ public class NotFinishedEventDetailActivity extends AppCompatActivity {
         event = db.getOneEvent(eventID);
 
         // Drivers of Event
-        drivers = new ArrayList<>();
         drivers = db.getDriversOfEvent(eventID);
-        if(drivers.isEmpty()) drivers = giveMeDriverList();
-    }
-
-    private ArrayList<Driver> giveMeDriverList() {
-        ArrayList<Driver> drivers = new ArrayList<>();
-        for(int i = 1; i <= event.getAnzahlDrivers(); i++) {
-            Driver driver = new Driver("Fahrer " + i, "keine Maschine");
-            drivers.add(driver);
-        }
-        return drivers;
     }
 
     private AlertDialog.Builder giveMeListDialogBuilder(ListView myList) {
@@ -110,7 +99,7 @@ public class NotFinishedEventDetailActivity extends AppCompatActivity {
 
     public void clicked(View v) {
         if(v.getId() == R.id.BUTTON_LIST_DRIVERS_DETAIL) {
-            AdapterDriverList adapter = new AdapterDriverList(this, drivers, false);
+            AdapterDriverList adapter = new AdapterDriverList(this, drivers, false, false);
             ListView listOFDrivers = new ListView(this);
             listOFDrivers.setAdapter(adapter);
 
